@@ -1,0 +1,68 @@
+/* ── Brand tokens ── */
+:root {
+  --purple-gradient: linear-gradient(90deg, #9179eb 0%, #6c38fa 100%);
+  --purple-gradient-inverse: linear-gradient(180deg, #9179eb 0%, #6c38fa 100%);
+  --chat-bg: #8A2BE2;
+  --ai-color: #A6FFA3;
+  --user-color: #FFF7F6;
+  --bg-color: #28044A;
+  --darkest: #6c38fa;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'Signika', sans-serif;
+}
+
+/* ── Noise overlay ── */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noisy' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.50' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noisy)' opacity='0.15'/%3E%3C/svg%3E");
+  opacity: 0.3;
+  z-index: 1;
+}
+
+/* ── Shared buttons ── */
+.theme-toggle-button {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  color: var(--ai-color);
+  background-color: #9179eb;
+  border: none;
+  cursor: pointer;
+}
+.theme-toggle-button:hover {
+  background-color: var(--darkest);
+}
+
+/* ── Scroll progress bar ── */
+#scroll-progress-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.05);
+  z-index: 9999;
+}
+#scroll-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: #9179eb;
+  transition: width 0.15s ease-out;
+}
+
+/* ── Dark theme overrides ── */
+.dark-theme #scroll-progress-container {
+  background: rgba(255, 255, 255, 0.15);
+}
+.dark-theme #scroll-progress-bar {
+  background: var(--ai-color);
+}

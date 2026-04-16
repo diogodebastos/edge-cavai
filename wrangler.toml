@@ -1,0 +1,13 @@
+name = "edge-cavai"
+main = "src/index.ts"
+compatibility_date = "2026-04-01"
+compatibility_flags = ["nodejs_compat"]
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+
+[[rules]]
+type = "Text"
+globs = ["**/*.md"]
+fallthrough = true
