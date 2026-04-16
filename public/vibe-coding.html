@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>db-vibes</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Font: Signika -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Signika:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+    /* ---------------------------------------------------
+       GLOBAL  ─ brand colours, gradient & noise overlay
+    --------------------------------------------------- */
+    :root{
+        --purple-gradient:            linear-gradient(90deg, #9179eb 0%, #6c38fa 100%);
+        --purple-gradient-inverse:    linear-gradient(180deg, #9179eb 0%, #6c38fa 100%);
+        --chat-background-color:      #8A2BE2;
+        --ai-color:                   #A6FFA3;
+        --user-color:                 #FFF7F6;
+        --background-color:           #28044A;
+        --darkest-color:              #6c38fa;
+    }
+
+    html, body{
+        margin:0;
+        min-height:100vh;            /* allow page to grow & scroll */
+        background:var(--purple-gradient);
+        font-family:'Signika', sans-serif;
+        color:#FFF;
+    }
+
+    /* Noise overlay for the gradient background */
+    body::before{
+        content:"";
+        position:fixed;
+        top:0; left:0;
+        width:100%; height:100%;
+        pointer-events:none;
+        background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noisy' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.50' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noisy)' opacity='0.15'/%3E%3C/svg%3E");
+        opacity:.3;
+        z-index:1;
+    }
+
+    /* ---------------------------------------------------
+       LAYOUT  ─ responsive grid of preview cards
+    --------------------------------------------------- */
+    .vibe-coding-grid{
+        display:grid;
+        gap:1.5rem;
+        grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+        margin:2rem auto;
+        width:90%;
+        max-width:1600px;
+        position:relative;           /* keep content above noise overlay */
+        z-index:2;
+    }
+
+    /* ---------------------------------------------------
+       COMPONENT  ─ preview card
+    --------------------------------------------------- */
+    .preview-card{
+        display:flex;
+        flex-direction:column;
+        background:#fff;
+        border:1px solid #dcdcdc;
+        box-shadow:2px 2px 5px rgba(0,0,0,.15);
+        border-radius:6px;
+        overflow:hidden;
+    }
+
+    /* Card heading */
+    .preview-card h3{
+        margin:0;
+        padding:.75rem 1rem;
+        font-size:1.1rem;
+        text-align:center;
+        background:#A6FFA3;
+        color:#8A2BE2;
+        font-family:'Signika', sans-serif;
+    }
+
+    /* ---------------------------------------------------
+       ASPECT-RATIO preview frame
+    --------------------------------------------------- */
+    .preview-frame{
+        position:relative;
+        width:100%;
+        aspect-ratio:9/10;           /* Graceful fallback below */
+    }
+    @supports not (aspect-ratio:9/10){
+        .preview-frame{padding-top:56.25%;}
+        .preview-frame>*{position:absolute;inset:0;}
+    }
+    .preview-frame iframe{position:absolute;inset:0;border:0;width:100%;height:100%;}
+
+    /* Placeholder for “coming soon” cards */
+    .preview-frame.placeholder{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        background:#e9ecef;
+    }
+    .placeholder-emoji{font-size:3.5rem;line-height:1;}
+    </style>
+</head>
+
+<body>
+
+<div class="vibe-coding-grid">
+
+    <!-- SuperPosition -->
+    <div class="preview-card">
+        <h3>
+            <a href="https://cf-cl-lin-2.diogodebastos18.workers.dev/" target="_blank">
+                Claude Takes Control
+            </a>
+        </h3>
+        <div class="preview-frame">
+            <iframe src="https://cf-cl-lin-2.diogodebastos18.workers.dev/" loading="lazy"></iframe>
+        </div>
+    </div>
+
+    <!-- SuperPosition -->
+    <div class="preview-card">
+        <h3>
+            <a href="https://super-position-grid.diogodebastos18.workers.dev/" target="_blank">
+                Super Position Terrain
+            </a>
+        </h3>
+        <div class="preview-frame">
+            <iframe src="https://super-position-grid.diogodebastos18.workers.dev/" loading="lazy"></iframe>
+        </div>
+    </div>
+
+    <!-- EuroSweeper -->
+    <div class="preview-card">
+        <h3>
+            <a href="https://eurosweeper.diogodebastos18.workers.dev/" target="_blank">
+                EuroSweeper
+            </a>
+        </h3>
+        <div class="preview-frame">
+            <iframe src="https://eurosweeper.diogodebastos18.workers.dev/" loading="lazy"></iframe>
+        </div>
+    </div>
+
+    <!-- Glow Pong -->
+    <div class="preview-card">
+        <h3>
+            <a href="https://glow-pong.diogodebastos18.workers.dev/" target="_blank">
+                Glow Pong
+            </a>
+        </h3>
+        <div class="preview-frame">
+            <iframe src="https://glow-pong.diogodebastos18.workers.dev/" loading="lazy"></iframe>
+        </div>
+    </div>
+
+    <!-- cavai 
+    <div class="preview-card">
+        <h3>
+            <a href="https://diogodebastos.vercel.app" target="_blank">
+                cavai
+            </a>
+        </h3>
+        <div class="preview-frame">
+            <iframe src="https://diogodebastos.vercel.app" loading="lazy"></iframe>
+        </div>
+    </div>
+    -->
+
+    <!-- Under Construction -->
+    <div class="preview-card">
+        <h3><i>coming soon…</i></h3>
+        <div class="preview-frame placeholder">
+            <span class="placeholder-emoji">🚧</span>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

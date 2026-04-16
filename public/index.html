@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>db</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Signika:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/shared.css">
+    <link rel="stylesheet" href="/css/chat.css">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-L58TRTVXWP"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-L58TRTVXWP');
+    </script>
+</head>
+<body>
+    <div class="chat-container" id="chatContainer">
+        <div class="card" style="flex:1; display:flex; flex-direction:column;">
+            <div class="card-header">
+                <a href="/vibe-coding" style="float:right;">&#128073; <i>vibe-coding</i></a>
+                <a href="/cv" style="font-weight:bold;">Diogo's CV &#128072;</a> | <a href="/blog">&#128073; blog</a>
+            </div>
+            <div class="messages-box" style="flex:1;">
+                <ul class="messages-list">
+                    <li class="message received">
+                        <div class="message-text">
+                            <div class="message-sender"><b></b></div>
+                            <div class="message-content">
+                                <p><b>Try talking with my CV:</b></p>
+                                <p>
+                                    Paste a job description for a quick fit check.<br>
+                                    What are Diogo's top strengths?<br>
+                                    Does he match this role? Why/why not?
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <form class="message-form">
+            <div class="input-group">
+                <input type="text" class="message-input" placeholder="Ask about Diogo or paste a job description...">
+                <button type="submit" class="btn-send">Send</button>
+            </div>
+        </form>
+        <div class="footer">
+            Powered by Anthropic | Built by <a href="https://www.linkedin.com/in/diogodebastos/" target="_blank">db</a>
+        </div>
+    </div>
+    <script src="/js/chat.js"></script>
+</body>
+</html>
