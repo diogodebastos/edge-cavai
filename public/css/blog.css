@@ -13,6 +13,7 @@
 /* Blog list uses purple gradient background */
 body:has(.blog-list-container) {
   background: var(--purple-gradient);
+  font-family: 'Signika', sans-serif;
 }
 
 .back-link {
@@ -48,6 +49,7 @@ body:has(.blog-layout) {
   background-color: #FFF7F6;
   color: black;
   transition: background-color 0.3s ease, color 0.3s ease;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 body.dark-theme:has(.blog-layout) {
   background-color: black;
@@ -120,7 +122,8 @@ body.dark-theme:has(.blog-layout) {
 .blog-main {
   max-width: 8.27in;
   width: 100%;
-  margin: 0 auto;
+  margin: 0.5rem auto 0;
+  padding: 0 15px;
   line-height: 1.6;
 }
 #blog-content h1:first-child,

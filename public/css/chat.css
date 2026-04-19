@@ -2,6 +2,7 @@
 html, body {
   height: 100%;
   background: var(--purple-gradient);
+  font-family: 'Signika', sans-serif;
 }
 
 .chat-container {
@@ -20,6 +21,8 @@ html, body {
   flex-grow: 1;
   height: 90%;
   border: none;
+  border-radius: 0.25rem;
+  overflow: hidden;
 }
 
 /* ── Messages area (replaces Bootstrap .card-body) ── */
