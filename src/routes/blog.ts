@@ -3,13 +3,7 @@ import type { BlogPostMeta, Env } from "../types";
 import { renderMarkdown } from "../lib/markdown";
 import { layout } from "../lib/html";
 
-import bp1 from "../content/blog/blogpost_1.md";
-import bp2 from "../content/blog/blogpost_2.md";
-
-const posts: Record<string, string> = {
-  "blogpost-1": bp1,
-  "blogpost-2": bp2,
-};
+import posts from "../content/blog/index";
 
 function extractTitle(md: string): string {
   for (const line of md.split("\n")) {
@@ -22,7 +16,11 @@ function extractTitle(md: string): string {
 function getPostList(): BlogPostMeta[] {
   return Object.entries(posts)
     .map(([slug, md]) => ({ title: extractTitle(md), slug }))
-    .reverse();
+    .sort((a, b) => {
+      const na = Number((a.slug.match(/\d+$/) || [0])[0]);
+      const nb = Number((b.slug.match(/\d+$/) || [0])[0]);
+      return nb - na;
+    });
 }
 
 export function blogListHandler(c: Context<Env>) {
