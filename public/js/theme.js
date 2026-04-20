@@ -6,16 +6,28 @@ function initTheme(buttonId) {
   var button = document.getElementById(buttonId);
   if (!button) return;
 
-  button.addEventListener('click', function () {
-    document.body.classList.toggle('dark-theme');
+  // Use the same emoji entities as existing code
+  var sunHtml = '&#9728;&#65038;';
+  var moonHtml = '&#9790;';
+
+  function updateButton() {
     if (document.body.classList.contains('dark-theme')) {
-      button.innerHTML = '&#9728;&#65038;';
+      button.innerHTML = sunHtml;
       button.setAttribute('aria-label', 'Switch to Light Mode');
     } else {
-      button.innerHTML = '&#9790;';
+      button.innerHTML = moonHtml;
       button.setAttribute('aria-label', 'Switch to Dark Mode');
     }
+  }
+
+  // Toggle theme and update icon
+  button.addEventListener('click', function () {
+    document.body.classList.toggle('dark-theme');
+    updateButton();
   });
+
+  // Set initial state based on current body class
+  updateButton();
 }
 
 /**
