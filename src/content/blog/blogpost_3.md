@@ -1,4 +1,4 @@
-# Using Claude to create a Pokémon RomHack
+# Using Claude Code to create a Pokémon RomHack
 
 **The idea:** make the version of Pokémon Emerald that I wanted to play as a kid.
 
@@ -76,6 +76,6 @@ If someone at Cloudflare is reading: thank you. And if you are building somethin
 
 [HackDex](https://www.hackdex.app/hack/pokemon-emerald-legacy-solo-leveling-colosseum)
 
-
 Contribute [here](https://github.com/diogodebastos/Pokemon_Emerald_Legacy) on GitHub.
 
+![title screen](/images/blog/bp3/pokegba.jpeg)
