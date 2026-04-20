@@ -1,4 +1,4 @@
-# Building a CV Chatbot with Django and Claude
+# [wip] Building a CV Chatbot with Django and Claude
 
 ## Why a chatbot for a CV?
 

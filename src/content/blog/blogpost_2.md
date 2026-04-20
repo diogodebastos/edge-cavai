@@ -1,4 +1,4 @@
-# Claude Takes Control Until Cloudflare Hires Me
+# [wip] Claude Takes Control Until of My Socials
 
 ## The control panel
 [Claude Control Panel](https://cf-cl-lin-2.diogodebastos18.workers.dev/)
