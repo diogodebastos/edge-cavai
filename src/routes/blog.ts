@@ -46,6 +46,7 @@ export function blogListHandler(c: Context<Env>) {
     layout(body, {
       title: "db-blog",
       css: ["/css/shared.css", "/css/blog.css"],
+      bodyClass: "dark-theme",
     }),
   );
 }
@@ -59,6 +60,7 @@ export function blogDetailHandler(c: Context<Env>) {
       layout("<p>Blog post not found.</p>", {
         title: "db-blog",
         css: ["/css/shared.css", "/css/blog.css"],
+        bodyClass: "dark-theme",
       }),
       404,
     );
@@ -74,7 +76,7 @@ export function blogDetailHandler(c: Context<Env>) {
     <aside class="blog-sidebar">
         <div class="blog-actions">
             <a href="/blog" class="back-blog-button">&larr; All Posts</a>
-            <button class="theme-toggle-button" id="theme-toggle" aria-label="Switch to Dark Mode">&#9790;</button>
+            <button class="theme-toggle-button" id="theme-toggle" aria-label="Switch to Light Mode">&#9728;&#65038;</button>
         </div>
         <nav class="blog-toc" id="blog-toc" aria-label="Table of contents">
             <h2>Contents</h2>
@@ -90,6 +92,7 @@ export function blogDetailHandler(c: Context<Env>) {
     layout(body, {
       title: "db-blog",
       css: ["/css/shared.css", "/css/blog.css"],
+      bodyClass: "dark-theme",
       js: ["/js/toc.js", "/js/theme.js"],
       inlineScript: `
         if (typeof buildToc === 'function') buildToc('blog-content', 'blog-toc');

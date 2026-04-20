@@ -1,8 +1,8 @@
 # Using Claude to create a Pokémon RomHack
 
-The idea: make the version of Pokémon Emerald that I wanted to play as a kid.
+**The idea:** make the version of Pokémon Emerald that I wanted to play as a kid.
 
-The how: use [pokémon emerald decompilation project](https://github.com/pret/pokeemerald), mods from the romhacking community ([Pokémon Emerald Legacy](https://github.com/cRz-Shadows/Pokemon_Emerald_Legacy) and [enhanced version](https://github.com/Exclsior/Pokemon_Emerald_Legacy_Enhanced)), **Claude Code** to help me stitch things together and add my own custom modifications, and Cloudflare to host the game for free.
+**The how:** use [pokémon emerald decompilation project](https://github.com/pret/pokeemerald), mods from the romhacking community ([Pokémon Emerald Legacy](https://github.com/cRz-Shadows/Pokemon_Emerald_Legacy) and [enhanced version](https://github.com/Exclsior/Pokemon_Emerald_Legacy_Enhanced)), Claude Code to help me stitch things together and add my own custom modifications, and Cloudflare to host the game for free.
 
 ![title screen](/images/blog/bp3/pokeemerald-0.png)
 
