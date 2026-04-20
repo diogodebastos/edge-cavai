@@ -15,7 +15,7 @@ export function cvHandler(c: Context<Env>) {
     <aside class="cv-sidebar" data-html2canvas-ignore="true">
         <div class="cv-actions">
             <button class="download-pdf-button" id="download-pdf">Download CV</button>
-            <button class="theme-toggle-button" id="theme-toggle" aria-label="Switch to Dark Mode">&#9790;</button>
+            <button class="theme-toggle-button" id="theme-toggle" aria-label="Switch to Light Mode">&#9728;&#65038;</button>
         </div>
         <nav class="cv-toc" id="cv-toc" aria-label="Table of contents">
             <h2>Contents</h2>
@@ -31,6 +31,7 @@ export function cvHandler(c: Context<Env>) {
     layout(body, {
       title: "db-cv",
       css: ["/css/shared.css", "/css/cv.css"],
+      bodyClass: "dark-theme",
       js: [
         "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js",
         "/js/toc.js",
