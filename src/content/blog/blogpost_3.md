@@ -78,4 +78,4 @@ If someone at Cloudflare is reading: thank you. And if you are building somethin
 
 Contribute [here](https://github.com/diogodebastos/Pokemon_Emerald_Legacy) on GitHub.
 
-![title screen](/images/blog/bp3/pokegba.jpeg)
+![title screen](/images/blog/bp3/pokegba.png)
