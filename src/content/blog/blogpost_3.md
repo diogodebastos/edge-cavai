@@ -57,6 +57,12 @@ Workflow: describe the feature, point Claude at the relevant subsystem (`data/tr
 ![title screen](/images/blog/bp3/pokeemerald-11.png)
 ![title screen](/images/blog/bp3/pokeemerald-13.png)
 
+But if I have to summarize using Claude Code in one image, is this:
+
+![title screen](/images/blog/bp3/red01.jpg)
+
+*"From comment to feature in an hour"*
+
 ## Cloudflare
 
 Cloudflare is what makes a project like this viable for a solo hobbyist. A ROM hack is a weird thing to ship: a `.gba` blob, a JS emulator, a Pokédex, a landing page, and the occasional experimental feature. No revenue, no enterprise budget, just me on a laptop wanting strangers to be able to click a link and play. Cloudflare Pages hosts it all, free, globally distributed, zero config beyond pointing it at the git repo. Push to main, it deploys. That is the entire ops story.
