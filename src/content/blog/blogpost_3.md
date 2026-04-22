@@ -67,8 +67,8 @@ The workflow also maps cleanly onto agentic development. I iterate on the ROM an
 
 If someone at Cloudflare is reading: thank you. And if you are building something agentic on top of Workers/Pages/Durable Objects and want to talk to a builder who has spent real time orchestrating Claude Code across a multi-repo, multi-language project (C decomp + TypeScript/Astro frontend + emulator glue), [get in touch](https://github.com/diogodebastos).
 
-![title screen](/images/blog/bp3/pages01.jpg)
-![title screen](/images/blog/bp3/pages02.jpg)
+![title screen](/images/blog/bp3/pages01.png)
+![title screen](/images/blog/bp3/pages02.png)
 
 ## Play it here!
 
