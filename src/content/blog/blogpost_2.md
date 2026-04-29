@@ -1,7 +1,7 @@
 # [wip] Claude Takes Control of My LinkedIn
 
 ## The control panel
-[Claude Control Panel](https://cf-cl-lin-2.diogodebastos18.workers.dev/)
+[Claude Control Panel](https://cf-cl-lin-2.diogobastos.workers.dev/)
 
 ## Cloudflare is human-first
 D1 and Workers, great for builders and PoC projects, no gatekeeping
