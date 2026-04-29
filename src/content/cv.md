@@ -1,8 +1,8 @@
 # Diogo de Bastos 👋
 
-Lisbon, Portugal | diogodebastos18@gmail.com | [LinkedIn](https://www.linkedin.com/in/diogodebastos) | [GitHub](https://github.com/diogodebastos) | [Google Scholar](https://scholar.google.com/citations?user=6f2lV5YAAAAJ&hl=en)
+Lisbon, Portugal | [LinkedIn](https://www.linkedin.com/in/diogodebastos) | [GitHub](https://github.com/diogodebastos) | [Google Scholar](https://scholar.google.com/citations?user=6f2lV5YAAAAJ&hl=en)
 
-👉 [try talking with my CV](https://edge-cavai.diogodebastos18.workers.dev/)
+👉 [try talking with my CV](https://edge-cavai.diogobastos.workers.dev/)
 
 ## Summary 📜 
 Senior data scientist (5+ years) with a Ph.D. in Physics and a track record of deploying machine learning solutions that operate on large-scale, high-velocity data. I pair rigorous statistical modelling with production engineering, working closely with product, engineering, and risk stakeholders to deliver resilient analytics. Recent focus spans time-series forecasting, optimisation, and LLM-enabled automation, with experience maintaining distributed compute environments within global collaborations.
