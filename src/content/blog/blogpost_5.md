@@ -1,65 +1,127 @@
-# Velvet Blum: a social network with no algorithm and no ads
+# Wrangler ships your code. Something needs to wire your stack.
 
-*A weekend experiment in giving the feed back to the user.*
+*A weekend project, an open question for Cloudflare.*
 
 ---
 
-Every social network I've used in the last decade has the same loop: you follow people, an algorithm decides what you actually see, and ads are slotted in between. The follow graph stops being the feed. It becomes a *suggestion* the algorithm overrides.
+Claude Code can build a Cloudflare Worker in thirty seconds.
 
-Velvet Blum is the opposite of that. **You curate your network. Your network is your feed.** No ranking, no recommendations, no ads. Reverse-chronological, always.
+Wiring it up takes thirty minutes.
 
-Live: [velvet-blum.pages.dev](https://velvet-blum.pages.dev/).
+I want to talk about that gap. Where it comes from, why Agents Week 2026 didn't quite close it, and a small open-source tool I built — `binding-doctor` — that takes a stab at the missing piece.
 
-![feed](/images/blog/bp5/feed.png)
+## The setup
 
-## The lens
+I'm a physics PhD turned data scientist. I love building things and I love Cloudflare. The agent-driven workflow Cloudflare has been pushing — Workers + Agents SDK + the API MCP server + the Skills plugin — feels like the right shape of the future. So I sat down this weekend with Claude Code and tried to build a small chat app on Workers using nothing but prompts.
 
-The interesting primitive isn't the feed — it's the **lens**.
+The code came out clean. A `fetch` handler, a Durable Object, a few `env.X` references for D1, KV, R2, a queue. Three minutes.
 
-Visit `/u/<handle>/lens` and you see *that user's feed* — the posts they would see, in their reverse-chronological order, through their follow graph. Read-only. You can't react or comment as them. But every post has a tiny `+ follow @author` button so you can copy accounts you didn't know about into your own network.
+Then came the part the agent couldn't do.
 
-It turns curation into a public good. Instead of an algorithm doing taste-matching for you, you borrow taste from a person you trust. One click and a stranger's curator becomes a contributor to yours.
+```
+> wrangler deploy
+✘ [ERROR] Database "CHAT_DB" missing database_id in wrangler.toml.
+```
 
-![lens](/images/blog/bp5/lens.png)
+So I asked Claude. Claude told me to run `npx wrangler d1 create chat-db`, copy the UUID, paste it in. Then KV. Then R2. Then a queue. Then `wrangler secret put`. Each step a context switch. Each ID hand-carried from terminal to file. Twenty-five more minutes of plumbing.
 
-## Encrypted DMs
+The agent could *write the program*. It could not *finish the program*.
 
-The other thing I wanted was DMs the server can't read.
+## What Cloudflare already shipped
 
-- Per-device **X25519** keypair. Private key wrapped with a passphrase via **Argon2id** + libsodium `secretbox`. Server never sees the passphrase or the unwrapped key.
-- Messages sealed client-side using the recipient's public key (`crypto_box_seal`). Server stores ciphertext only.
-- A **second sealed copy** is written under the sender's own public key, so the sender can also read their own history from any device they unlock.
-- Realtime fanout via a **Durable Object per conversation** with WebSocket subscribers.
-- A user may DM another iff the recipient follows the sender, and neither party blocks the other. No cold inbox, no spam vector.
+Cloudflare Agents Week 2026 was a serious push at this whole problem space. Quick recap, because it's important — I'm not pitching against it, I'm pitching into one of the gaps it left:
 
-![encrypted DMs](/images/blog/bp5/dm.png)
+- **Cloudflare API MCP** — agents can hit any of 2500+ endpoints via two tools, `search` and `execute`.
+- **Skills plugin** — `wrangler` skill for command knowledge, `/cloudflare:build-agent` and `/cloudflare:build-mcp` slash-commands for scaffolding.
+- **Stripe + Projects protocol** — agents can autonomously create a Cloudflare account, register a domain, get an API token, and deploy. No human needed at the *account* layer.
+- **Project Think** — durable, actor-based primitives so agents *persist* across runs instead of being one-shot.
+- **Durable Object Facets, Outbound Workers** — better isolation primitives.
+- **Enterprise MCP + Code Mode** — observability, gateway, WAF wrapped around agent traffic at scale.
 
-If the D1 database leaks tomorrow, the messages stay opaque. The keys to read them never left the clients.
+It's a remarkable amount of stuff in one week. Most of the friction I named — *account creation*, *payment*, *token issuance* — is solved.
 
-## Stack
+But not the friction I hit.
 
-- **Web**: SvelteKit PWA on Cloudflare Pages
-- **API**: Hono on Cloudflare Workers
-- **DB**: D1 (SQLite) via Drizzle
-- **Media**: R2 for photos, Stream for video
-- **Sessions**: Workers KV
-- **Email**: Resend (magic-link auth — no passwords)
-- **Realtime**: Durable Objects for DM WebSocket fanout
-- **Crypto**: libsodium-wrappers (X25519 sealed-box, Argon2id KDF, secretbox)
+## The shape of the remaining gap
 
-The whole thing is one pnpm workspace: `apps/api` (Hono), `apps/web` (SvelteKit), `packages/db` (Drizzle schema + migrations), `packages/schema` (shared Zod types), `infra/wrangler.toml`.
+There are three sources of truth in any Cloudflare Worker project:
 
-## Why no algorithm
+1. The **code** — `env.CHAT_DB`, `env.UPLOADS_BUCKET`. *What the program needs.*
+2. The **wrangler config** — `[[d1_databases]] binding = "CHAT_DB" database_id = "…"`. *What we've declared.*
+3. The **account** — actual D1 databases, R2 buckets, KV namespaces, queues. *What's real.*
 
-I'm not against ranking in general — I'm against ranking I didn't ask for. The algorithmic feed conflates two things: *what is new in my network* and *what someone thinks I want*. The first is a fact. The second is a guess. Velvet Blum only shows you the first. If you want a different selection, you build a different network — or you borrow one through a lens.
+These three drift constantly. Code references something that isn't declared. Config declares something that doesn't exist. The account holds something nothing references. The agent can read all three. But nothing reconciles them.
 
-It's also a much smaller surface. No ranking pipeline, no engagement metrics, no recommendation model, no ad inventory. The whole product is a couple of Workers, a D1, an R2, and a handful of Durable Objects.
+Wrangler is the *build tool*. The 2500-endpoint API MCP is the *primitive layer*. The Skills plugin is the *recipe book*. There's no *reconciler* — no `git status` for bindings, no `kubectl apply` for a Worker project.
+
+So the agent's loop is:
+
+> write code → run wrangler → read error → call MCP to look up resource → call MCP to create resource → ask the human to paste the ID → wait → wait → wait
+
+The wait is the failure. Every wait is the agent-flow leaking out into a human-flow.
+
+## Binding Doctor
+
+I wrote `binding-doctor` (`bdr`) over a weekend. It's tiny — six TypeScript files, ~600 lines — and it does exactly one thing:
+
+```
+$ bdr diff
+BINDING         KIND     DECL  REF  LIVE  STATUS
+--------------  -------  ----  ---  ----  ----------------
+CHAT_DB         unknown  —     yes  —     missing-declared
+SESSIONS_KV     unknown  —     yes  —     missing-declared
+UPLOADS_BUCKET  unknown  —     yes  —     missing-declared
+```
+
+Three-way diff. Code says you need these. Config doesn't declare them. Account doesn't have them.
+
+```
+$ bdr apply --yes
+  create d1   CHAT_DB        → my-app-chat-db-8i6x   (9c48b532-…)
+  create kv   SESSIONS_KV    → my-app-sessions-kv-3h0f
+  create r2   UPLOADS_BUCKET → my-app-uploads-bucket-s000
+
+Wrote 3 bindings to wrangler.toml.
+Migrations [CHAT_DB]: applied 0001_init.sql
+```
+
+90-second cast: [asciinema.org/a/dYDfRnAlD7Cdzsth](https://asciinema.org/a/dYDfRnAlD7Cdzsth).
+
+It's idempotent. Re-run, zero diff. Delete the KV namespace from the dashboard, re-run, drift detected, drift healed. Same as Terraform — but for a Worker project, in one command, with no state file, because the wrangler config *is* the state file.
+
+There's also an MCP server (`bdr-mcp`) that exposes `bdr_diff`, `bdr_plan`, `bdr_apply`, `bdr_migrate` as tools. Plug it into Claude Code, and now the agent's loop becomes:
+
+> write code → call bdr_apply → ship
+
+No human in the middle.
+
+## Why it's small on purpose
+
+`bdr` isn't a platform. It's not Pulumi. It's not a competitor to anything. It's the missing line between two existing primitives:
+
+- the API MCP (which lets you create D1 databases imperatively)
+- Wrangler (which deploys whatever's already declared)
+
+The line in between — *figure out what's missing and fix it* — was the manual step. I closed it with a regex (`env\.([A-Z_]+)`), a TOML parser, a few `fetch` calls, and an inference table that maps `_DB → d1`, `_BUCKET → r2`, `_KV → kv`, `_QUEUE → queue`, `_INDEX → vectorize`.
+
+That's the whole product.
+
+## What I think Cloudflare should consider
+
+This kind of thing should be in `wrangler` itself. Maybe `wrangler doctor`. Maybe a flag on `wrangler deploy` — `--auto-bind` — that does the same thing on the way to deploy. The MCP variant should ship as part of the Skills plugin.
+
+Three reasons it belongs in the platform:
+
+1. **It eliminates the most common agent-to-human handoff.** Every other agentic flow Cloudflare shipped this year converges on this same friction point.
+2. **The data is all there.** `wrangler.toml` is structured. The API has list endpoints. The code is parseable. There's nothing exotic.
+3. **It's a lever for adoption.** The story "Cloudflare is the only cloud where an agent ships an app without asking you for an ID" is a story.
 
 ## What's next
 
-- Threading and quote-posts.
-- Group DMs (same X25519 sealed-box construction, one envelope per recipient).
-- Image-first compose flow on mobile.
-- Federation is the obvious next question — but I want to live with the curated-only model for a while first.
+`bdr` is on GitHub: github.com/diogodebastos/binding-doctor. MIT-licensed. The 90-second demo is in the repo. PRs welcome — vectorize is functional but the dimensions/metric should come from a code annotation, queues should auto-wire consumers when a `queue` handler is found, secrets need a `.env.doctor` template path. All weekend-2 work.
 
-Try it: [velvet-blum.pages.dev](https://velvet-blum.pages.dev/). If you make a network, share your lens URL.
+I'd love to build the next version of this inside Cloudflare. The agent-first pitch I keep hearing in the keynotes is the pitch I want to ship. If anyone reading this knows the right person — DevRel, Workers, Agents — I'm at diogodebastos18@gmail.com.
+
+---
+
+*Thanks for reading. The repo: [github.com/diogodebastos/binding-doctor](https://github.com/diogodebastos/binding-doctor). The 90-second demo: [asciinema.org/a/dYDfRnAlD7Cdzsth](https://asciinema.org/a/dYDfRnAlD7Cdzsth).*
