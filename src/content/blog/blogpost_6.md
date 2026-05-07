@@ -36,6 +36,25 @@ The other thing I wanted was DMs the server can't read.
 
 If the D1 database leaks tomorrow, the messages stay opaque. The keys to read them never left the clients.
 
+## Security
+
+"Isn't a vibecoded social app a security disaster?" Fair question. Two pieces are worth being concrete about: account access and message contents.
+
+**Account access.** There are no passwords to leak or reuse. Auth is magic-link only: you put in your email, the API mints a single-use token, you click it, and the server creates a session. The session token is 32 bytes from `crypto.getRandomValues` (256 bits of entropy), stored server-side in Workers KV, and handed back as an `httpOnly`, `SameSite=Lax`, `Secure` cookie. JavaScript can't read it, so an XSS bug can't exfiltrate it; SameSite blocks the obvious CSRF shapes. Magic-link issuance is rate-limited (5 per email per 10 minutes), and links are single-use and time-bound. The practical floor of your account security is your email inbox.
+
+**How login works**, end to end:
+
+1. Client `POST /auth/magic-link` with an email. The API generates a token, stores `(token, email, expiresAt)` in D1, and emails a link via Resend.
+2. Client `POST /auth/consume` with the token. The API marks the magic-link row consumed (single-use), looks up or creates the user, mints a session token, writes `s:<token> → userId` to Workers KV with a 30-day TTL, and sets the `vb_session` cookie.
+3. Every subsequent request goes through `sessionMiddleware`, which reads the cookie and resolves it back to a `userId` via KV. Protected routes wrap that with `requireAuth`.
+4. Logout deletes the KV entry and clears the cookie, immediately invalidating the session everywhere.
+
+The whole auth surface is small enough to read in one sitting: [`apps/api/src/routes/auth.ts`](https://github.com/diogodebastos/velvet-blum/blob/main/apps/api/src/routes/auth.ts) for the login flow, and [`apps/web/src/lib/crypto.ts`](https://github.com/diogodebastos/velvet-blum/blob/main/apps/web/src/lib/crypto.ts) (~150 lines) for every line of crypto in the app.
+
+**Message contents.** The DM keys live on your device, not on the server. The X25519 keypair is generated client-side; the private key is wrapped with an Argon2id-derived key (`OPSLIMIT_MODERATE` / `MEMLIMIT_MODERATE`, random per-user salt) using libsodium `secretbox`, and only the *wrapped* blob is uploaded. Once unwrapped with your passphrase, the raw private key is cached in the browser's IndexedDB on that device. The server stores public keys, wrapped private keys, and sealed ciphertexts — nothing it can decrypt. A session hijacker on a fresh device sees encrypted blobs until they also know your passphrase.
+
+**What this doesn't give you.** Sealed-box DMs use static keys, so there's no forward secrecy: if a device is fully compromised, past ciphertexts on that device become readable. There's no 2FA or active-session list yet, no "log out everywhere" button, and no re-auth prompt for sensitive actions. The crypto is standard libsodium primitives in roughly 150 lines (`apps/web/src/lib/crypto.ts`) — easy to audit, but not formally audited. Forward secrecy via ephemeral session keys, device management, and a passphrase-strength meter are the obvious next steps.
+
 ## Stack
 
 - **Web**: SvelteKit PWA on Cloudflare Pages
@@ -61,5 +80,11 @@ It's also a much smaller surface. No ranking pipeline, no engagement metrics, no
 - Group DMs (same X25519 sealed-box construction, one envelope per recipient).
 - Image-first compose flow on mobile.
 - Federation is the obvious next question — but I want to live with the curated-only model for a while first.
+- Security:
+  - Forward secrecy for DMs via ephemeral session keys (X3DH-style handshake), so device compromise doesn't retroactively unlock history.
+  - Active-session list and a "log out everywhere" button backed by a per-user session index in KV.
+  - Optional TOTP 2FA on top of magic-link, and re-auth prompts for destructive actions (delete account, rotate keys).
+  - Passphrase strength meter at signup, plus a key-rotation flow that re-wraps the private key without invalidating message history.
+  - A formal third-party audit of `crypto.ts` and the auth surface before the app leaves "weekend experiment" status.
 
 Try it: [velvet-blum.pages.dev](https://velvet-blum.pages.dev/). If you make a network, share your lens URL.
