@@ -10,7 +10,7 @@ Velvet Blum is the opposite of that. **You curate your network. Your network is 
 
 Live: [velvet-blum.pages.dev](https://velvet-blum.pages.dev/).
 
-![feed](/images/blog/bp5/feed.png)
+![feed](/images/blog/bp6/feed.jpg)
 
 ## The lens
 
@@ -20,7 +20,7 @@ Visit `/u/<handle>/lens` and you see *that user's feed* — the posts they would
 
 It turns curation into a public good. Instead of an algorithm doing taste-matching for you, you borrow taste from a person you trust. One click and a stranger's curator becomes a contributor to yours.
 
-![lens](/images/blog/bp5/lens.png)
+![lens](/images/blog/bp6/lens.jpg)
 
 ## Encrypted DMs
 
@@ -32,7 +32,7 @@ The other thing I wanted was DMs the server can't read.
 - Realtime fanout via a **Durable Object per conversation** with WebSocket subscribers.
 - A user may DM another iff the recipient follows the sender, and neither party blocks the other. No cold inbox, no spam vector.
 
-![encrypted DMs](/images/blog/bp5/dm.png)
+![encrypted DMs](/images/blog/bp6/dm.jpg)
 
 If the D1 database leaks tomorrow, the messages stay opaque. The keys to read them never left the clients.
 
