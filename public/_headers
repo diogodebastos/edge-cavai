@@ -1,3 +1,9 @@
+/fonts/*.woff2
+  Cache-Control: public, max-age=31536000, immutable
+
+/fonts/*.css
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+
 /css/*
   Cache-Control: public, max-age=3600, stale-while-revalidate=86400
 

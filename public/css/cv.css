@@ -5,7 +5,7 @@ body {
   transition: background var(--dur-med) var(--ease-out), color var(--dur-med) var(--ease-out);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
-body.dark-theme {
+.dark-theme {
   background: linear-gradient(160deg, #0a0014 0%, #1a0033 60%, #06000f 100%);
   color: #FFF7F6;
 }
@@ -116,7 +116,7 @@ body.dark-theme {
   box-shadow: var(--glass-shadow);
   color: #fff;
 }
-body.dark-theme #cv-content {
+.dark-theme #cv-content {
   background: rgba(255,255,255,0.05);
   color: #FFF7F6;
 }
@@ -182,7 +182,7 @@ body.dark-theme #cv-content {
 
 /* ── Print: kill glass, restore plain ── */
 @media print {
-  body, body.dark-theme { background: #fff; color: #000; }
+  body, .dark-theme { background: #fff; color: #000; }
   body::before, body::after { display: none !important; }
   .cv-layout { display: block; max-width: 8.27in; margin: 0 auto; padding: 0; }
   .cv-sidebar, .cv-toc, #scroll-progress-container { display: none !important; }

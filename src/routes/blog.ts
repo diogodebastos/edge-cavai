@@ -56,7 +56,6 @@ ${siteNav("blog")}
     layout(body, {
       title: "db-blog",
       css: ["/css/shared.css", "/css/blog.css"],
-      bodyClass: "dark-theme",
       js: ["/js/theme.js"],
       inlineScript: `if (typeof initTheme === 'function') initTheme('theme-toggle');`,
     }),
@@ -72,7 +71,6 @@ export function blogDetailHandler(c: Context<Env>) {
       layout("<p>Blog post not found.</p>", {
         title: "db-blog",
         css: ["/css/shared.css", "/css/blog.css"],
-        bodyClass: "dark-theme",
       }),
       404,
     );
@@ -103,7 +101,6 @@ ${siteNav("blog")}
     layout(body, {
       title: "db-blog",
       css: ["/css/shared.css", "/css/blog.css"],
-      bodyClass: "dark-theme",
       js: ["/js/toc.js", "/js/theme.js"],
       inlineScript: `
         if (typeof buildToc === 'function') buildToc('blog-content', 'blog-toc');

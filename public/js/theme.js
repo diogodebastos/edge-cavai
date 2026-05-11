@@ -7,8 +7,8 @@ var THEME_KEY = 'theme';
 function applyStoredTheme() {
   try {
     var stored = localStorage.getItem(THEME_KEY);
-    if (stored === 'dark') document.body.classList.add('dark-theme');
-    else if (stored === 'light') document.body.classList.remove('dark-theme');
+    if (stored === 'dark') document.documentElement.classList.add('dark-theme');
+    else if (stored === 'light') document.documentElement.classList.remove('dark-theme');
   } catch (e) {}
 }
 
@@ -33,7 +33,7 @@ function initTheme(buttonId) {
     + '</svg>';
 
   function updateButton() {
-    if (document.body.classList.contains('dark-theme')) {
+    if (document.documentElement.classList.contains('dark-theme')) {
       button.innerHTML = sunSvg;
       button.setAttribute('aria-label', 'Switch to Light Mode');
     } else {
@@ -44,12 +44,12 @@ function initTheme(buttonId) {
 
   // Toggle theme, persist, and update icon
   button.addEventListener('click', function () {
-    var isDark = document.body.classList.toggle('dark-theme');
+    var isDark = document.documentElement.classList.toggle('dark-theme');
     try { localStorage.setItem(THEME_KEY, isDark ? 'dark' : 'light'); } catch (e) {}
     updateButton();
   });
 
-  // Set initial state based on current body class
+  // Set initial state based on current html class
   updateButton();
 }
 

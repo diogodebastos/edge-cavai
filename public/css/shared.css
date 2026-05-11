@@ -65,7 +65,21 @@
   --dur-slow: 0.45s;
 }
 
+/* ── Cross-document view transitions (eliminates white flash between pages) ── */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+}
+
 *, *::before, *::after { box-sizing: border-box; }
+
+html {
+  background: #4a1fb8;
+}
 
 html, body {
   margin: 0;
@@ -111,6 +125,8 @@ body::after {
   filter: blur(80px);
   opacity: 0.35;
   transition: opacity var(--dur-slow) var(--ease-out);
+  will-change: opacity;
+  contain: strict;
 }
 body::before {
   top: -20vmax;
@@ -123,8 +139,8 @@ body::after {
   background: radial-gradient(circle, var(--accent-pink) 0%, transparent 65%);
   opacity: 0.25;
 }
-body.dark-theme::before { opacity: 0.20; }
-body.dark-theme::after  { opacity: 0.18; }
+.dark-theme body::before { opacity: 0.20; }
+.dark-theme body::after  { opacity: 0.18; }
 
 /* ── Reusable glass surface ── */
 .glass {
@@ -286,7 +302,8 @@ body.dark-theme::after  { opacity: 0.18; }
 }
 
 /* ── Dark theme overrides ── */
-body.dark-theme {
+.dark-theme,
+.dark-theme body {
   background: linear-gradient(160deg, #0a0014 0%, #1a0033 60%, #06000f 100%);
 }
 .dark-theme #scroll-progress-container {
@@ -312,6 +329,12 @@ body.dark-theme {
 [data-stagger] > *:nth-child(5) { animation-delay: 240ms; }
 [data-stagger] > *:nth-child(6) { animation-delay: 300ms; }
 [data-stagger] > *:nth-child(7) { animation-delay: 360ms; }
+
+/* Skip stagger animations during view-transition navigations */
+.vt-nav [data-stagger] > *,
+.vt-nav .fade-in {
+  animation: none !important;
+}
 
 /* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {

@@ -29,7 +29,6 @@ export function cvHandler(c: Context<Env>) {
     layout(body, {
       title: "db-cv",
       css: ["/css/shared.css", "/css/cv.css"],
-      bodyClass: "dark-theme",
       js: [
         "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js",
         "/js/toc.js",

@@ -33,29 +33,27 @@ export function layout(body: string, opts: LayoutOptions = {}): string {
   const cssLinks = (opts.css ?? [])
     .map((href) => `<link rel="stylesheet" href="${href}">`)
     .join("\n    ");
-  const jsScripts = (opts.js ?? [])
-    .map((src) => `<script src="${src}"></script>`)
+  const jsScripts = [`<script src="/js/prefetch.js"></script>`, ...(opts.js ?? [])
+    .map((src) => `<script src="${src}"></script>`)]
     .join("\n    ");
   const inlineScript = opts.inlineScript
     ? `<script>${opts.inlineScript}</script>`
     : "";
-  const bodyClass = opts.bodyClass ? ` class="${opts.bodyClass}"` : "";
+  const htmlClass = opts.bodyClass ? ` ${opts.bodyClass}` : "";
 
   return `<!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="background:#4a1fb8" class="${htmlClass.trim()}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>${title}</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Signika:wght@400;600;700&display=swap">
-    <link href="https://fonts.googleapis.com/css2?family=Signika:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="preload" as="font" href="/fonts/signika-variable.woff2" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="/fonts/signika.css">
     ${cssLinks}
-    <script>(function(){try{var t=localStorage.getItem('theme');if(t==='dark')document.documentElement.dataset.theme='dark';else if(t==='light')document.documentElement.dataset.theme='light';}catch(e){}document.addEventListener('DOMContentLoaded',function(){var t=document.documentElement.dataset.theme;if(t==='dark')document.body.classList.add('dark-theme');else if(t==='light')document.body.classList.remove('dark-theme');});})();</script>
+    <script>(function(){try{var d=document.documentElement,t=localStorage.getItem('theme');if(t==='dark'){d.classList.add('dark-theme');}else if(t==='light'){d.classList.remove('dark-theme');}d.style.removeProperty('background');}catch(e){}self.addEventListener('pagereveal',function(e){if(e.viewTransition){d.classList.add('vt-nav');e.viewTransition.finished.then(function(){d.classList.remove('vt-nav');});}});})();</script>
 </head>
-<body${bodyClass}>
+<body>
     ${body}
     ${jsScripts}
     ${inlineScript}

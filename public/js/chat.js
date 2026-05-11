@@ -53,7 +53,8 @@ function appendMessage(role, text) {
   if (role === 'assistant') {
     var link = extractLinks(text);
     if (link) {
-      contentEl.innerHTML = '<a href="' + link + '" target="_blank" rel="noopener">' + link + '</a>';
+      var escaped = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      contentEl.innerHTML = escaped.replace(link, '<a href="' + link + '" target="_blank" rel="noopener">' + link + '</a>');
     } else {
       typeMessage(contentEl, text);
     }
@@ -85,11 +86,17 @@ function sendMessage(message) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ message: message, history: chatHistory.slice(0, -1) }),
   })
-    .then(function (res) { return res.json(); })
+    .then(function (res) {
+      if (!res.ok) throw new Error('Request failed (' + res.status + ')');
+      return res.json();
+    })
     .then(function (data) {
       var response = (data.response || '').replace(/^\s+/, '');
       appendMessage('assistant', response);
       chatHistory.push({ role: 'assistant', content: response });
+    })
+    .catch(function () {
+      appendMessage('assistant', 'Sorry, something went wrong. Please try again.');
     });
 }
 
