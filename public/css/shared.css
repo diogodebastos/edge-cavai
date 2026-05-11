@@ -29,7 +29,7 @@
     0 -1px 0 rgba(255, 255, 255, 0.08) inset,
     0 14px 40px rgba(20, 0, 60, 0.35),
     0 4px 14px rgba(20, 0, 60, 0.22);
-  --glass-blur: 14px;
+  --glass-blur: 24px;
   --glass-radius: 18px;
 
   /* ── Type scale (modular ~1.2) ── */
@@ -252,6 +252,8 @@ body::after {
   gap: var(--space-3);
   padding: var(--space-3) var(--space-5);
   background: var(--glass-tint);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
   border: 1px solid var(--glass-stroke);
   border-radius: var(--glass-radius);
   box-shadow: var(--glass-shadow);
