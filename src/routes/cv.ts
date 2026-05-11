@@ -1,11 +1,9 @@
 import type { Context } from "hono";
 import type { Env } from "../types";
-import cvMd from "../content/cv.md";
-import { renderMarkdown } from "../lib/markdown";
+import cvHtml from "../content/cv-html";
 import { layout } from "../lib/html";
 
 export function cvHandler(c: Context<Env>) {
-  const cvHtml = renderMarkdown(cvMd);
 
   const body = `
 <div id="scroll-progress-container">

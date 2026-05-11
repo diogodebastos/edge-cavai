@@ -9,6 +9,7 @@
 <!-- Google Font: Signika -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Signika:wght@400;600&display=swap">
     <link href="https://fonts.googleapis.com/css2?family=Signika:wght@400;600&display=swap" rel="stylesheet">
 
     <style>
@@ -16,34 +17,36 @@
        GLOBAL  ─ brand colours, gradient & noise overlay
     --------------------------------------------------- */
     :root{
-        --purple-gradient:            linear-gradient(90deg, #9179eb 0%, #6c38fa 100%);
+        --purple-gradient:            linear-gradient(120deg, #9179eb 0%, #6c38fa 55%, #4a1fb8 100%);
         --purple-gradient-inverse:    linear-gradient(180deg, #9179eb 0%, #6c38fa 100%);
         --chat-background-color:      #8A2BE2;
         --ai-color:                   #A6FFA3;
         --user-color:                 #FFF7F6;
         --background-color:           #28044A;
         --darkest-color:              #6c38fa;
+
+        --glass-tint:        rgba(255, 255, 255, 0.10);
+        --glass-tint-strong: rgba(255, 255, 255, 0.18);
+        --glass-stroke:      rgba(255, 255, 255, 0.28);
+        --glass-stroke-soft: rgba(255, 255, 255, 0.16);
+        --glass-shadow:
+            0 1px 0 rgba(255,255,255,0.35) inset,
+            0 -1px 0 rgba(255,255,255,0.08) inset,
+            0 8px 32px rgba(20, 0, 60, 0.28),
+            0 2px 8px rgba(20, 0, 60, 0.18);
+        --glass-blur: 22px;
+        --glass-radius: 18px;
     }
 
     html, body{
         margin:0;
-        min-height:100vh;            /* allow page to grow & scroll */
+        min-height:100vh;
         background:var(--purple-gradient);
         font-family:'Signika', sans-serif;
         color:#FFF;
     }
 
-    /* Noise overlay for the gradient background */
-    body::before{
-        content:"";
-        position:fixed;
-        top:0; left:0;
-        width:100%; height:100%;
-        pointer-events:none;
-        background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noisy' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.50' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noisy)' opacity='0.15'/%3E%3C/svg%3E");
-        opacity:.3;
-        z-index:1;
-    }
+
 
     /* ---------------------------------------------------
        LAYOUT  ─ responsive grid of preview cards
@@ -65,11 +68,36 @@
     .preview-card{
         display:flex;
         flex-direction:column;
-        background:#fff;
-        border:1px solid #dcdcdc;
-        box-shadow:2px 2px 5px rgba(0,0,0,.15);
-        border-radius:6px;
+        background:rgba(255,255,255,0.10);
+        border:1px solid var(--glass-stroke);
+        border-radius:var(--glass-radius);
         overflow:hidden;
+        box-shadow:var(--glass-shadow);
+        position:relative;
+        isolation:isolate;
+        transition:transform .25s ease, box-shadow .25s ease, background .25s ease;
+    }
+    .preview-card::before{
+        content:"";
+        position:absolute;
+        inset:0;
+        pointer-events:none;
+        border-radius:inherit;
+        background:
+            linear-gradient(180deg, rgba(255,255,255,.22) 0%, rgba(255,255,255,0) 35%),
+            radial-gradient(120% 70% at 50% -10%, rgba(255,255,255,.35), transparent 60%);
+        mix-blend-mode:screen;
+        z-index:0;
+    }
+    .preview-card > * { position:relative; z-index:1; }
+    .preview-card:hover{
+        transform:translateY(-3px);
+        background:var(--glass-tint-strong);
+        box-shadow:
+            0 1px 0 rgba(255,255,255,.45) inset,
+            0 -1px 0 rgba(255,255,255,.08) inset,
+            0 14px 40px rgba(20,0,60,.35),
+            0 4px 14px rgba(20,0,60,.22);
     }
 
     /* Card heading */
@@ -78,10 +106,12 @@
         padding:.75rem 1rem;
         font-size:1.1rem;
         text-align:center;
-        background:#A6FFA3;
+        background:rgba(166,255,163,.85);
         color:#8A2BE2;
         font-family:'Signika', sans-serif;
+        border-bottom:1px solid var(--glass-stroke-soft);
     }
+    .preview-card h3 a{ color:inherit; text-decoration:none; }
 
     /* ---------------------------------------------------
        ASPECT-RATIO preview frame
@@ -102,7 +132,7 @@
         display:flex;
         align-items:center;
         justify-content:center;
-        background:#e9ecef;
+        background:rgba(255,255,255,.06);
     }
     .placeholder-emoji{font-size:3.5rem;line-height:1;}
     </style>
@@ -120,7 +150,7 @@
             </a>
         </h3>
         <div class="preview-frame">
-            <iframe src="https://velvet-blum.pages.dev/" loading="lazy"></iframe>
+            <iframe data-src="https://velvet-blum.pages.dev/" loading="lazy"></iframe>
         </div>
     </div>
 
@@ -132,7 +162,7 @@
             </a>
         </h3>
         <div class="preview-frame">
-            <iframe src="https://cf-ai-bot-globe.pages.dev/" loading="lazy"></iframe>
+            <iframe data-src="https://cf-ai-bot-globe.pages.dev/" loading="lazy"></iframe>
         </div>
     </div>
 
@@ -144,7 +174,7 @@
             </a>
         </h3>
         <div class="preview-frame">
-            <iframe src="https://llm-circuits.diogobastos.workers.dev/" loading="lazy"></iframe>
+            <iframe data-src="https://llm-circuits.diogobastos.workers.dev/" loading="lazy"></iframe>
         </div>
     </div>
 
@@ -156,7 +186,7 @@
             </a>
         </h3>
         <div class="preview-frame">
-            <iframe src="https://pokemon-emerald-legacy-solo-leveling-colosseum.pages.dev/" loading="lazy"></iframe>
+            <iframe data-src="https://pokemon-emerald-legacy-solo-leveling-colosseum.pages.dev/" loading="lazy"></iframe>
         </div>
     </div>
 
@@ -168,7 +198,7 @@
             </a>
         </h3>
         <div class="preview-frame">
-            <iframe src="https://cf-cl-lin-2.diogobastos.workers.dev/" loading="lazy"></iframe>
+            <iframe data-src="https://cf-cl-lin-2.diogobastos.workers.dev/" loading="lazy"></iframe>
         </div>
     </div>
 
@@ -180,7 +210,7 @@
             </a>
         </h3>
         <div class="preview-frame">
-            <iframe src="https://super-position-grid.diogobastos.workers.dev/" loading="lazy"></iframe>
+            <iframe data-src="https://super-position-grid.diogobastos.workers.dev/" loading="lazy"></iframe>
         </div>
     </div>
 
@@ -192,7 +222,7 @@
             </a>
         </h3>
         <div class="preview-frame">
-            <iframe src="https://eurosweeper.diogobastos.workers.dev/" loading="lazy"></iframe>
+            <iframe data-src="https://eurosweeper.diogobastos.workers.dev/" loading="lazy"></iframe>
         </div>
     </div>
 
@@ -204,7 +234,7 @@
             </a>
         </h3>
         <div class="preview-frame">
-            <iframe src="https://glow-pong.diogobastos.workers.dev/" loading="lazy"></iframe>
+            <iframe data-src="https://glow-pong.diogobastos.workers.dev/" loading="lazy"></iframe>
         </div>
     </div>
 
@@ -216,7 +246,7 @@
             </a>
         </h3>
         <div class="preview-frame">
-            <iframe src="https://diogodebastos.vercel.app" loading="lazy"></iframe>
+            <iframe data-src="https://diogodebastos.vercel.app" loading="lazy"></iframe>
         </div>
     </div>
     -->
@@ -230,6 +260,21 @@
     </div>
 
 </div>
+
+<script>
+(function(){
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (!e.isIntersecting) return;
+      var f = e.target;
+      var src = f.getAttribute('data-src');
+      if (src) { f.src = src; f.removeAttribute('data-src'); }
+      io.unobserve(f);
+    });
+  }, { rootMargin: '300px 0px' });
+  document.querySelectorAll('iframe[data-src]').forEach(function(f){ io.observe(f); });
+})();
+</script>
 
 </body>
 </html>

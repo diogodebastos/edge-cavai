@@ -1,21 +1,12 @@
 import type { Context } from "hono";
-import type { BlogPostMeta, Env } from "../types";
-import { renderMarkdown } from "../lib/markdown";
+import type { Env } from "../types";
 import { layout } from "../lib/html";
 
 import posts from "../content/blog/index";
 
-function extractTitle(md: string): string {
-  for (const line of md.split("\n")) {
-    const trimmed = line.trim();
-    if (trimmed.startsWith("# ")) return trimmed.slice(2);
-  }
-  return "Untitled";
-}
-
-function getPostList(): BlogPostMeta[] {
+function getPostList() {
   return Object.entries(posts)
-    .map(([slug, md]) => ({ title: extractTitle(md), slug }))
+    .map(([slug, p]) => ({ slug, title: p.title }))
     .sort((a, b) => {
       const na = Number((a.slug.match(/\d+$/) || [0])[0]);
       const nb = Number((b.slug.match(/\d+$/) || [0])[0]);
@@ -53,9 +44,9 @@ export function blogListHandler(c: Context<Env>) {
 
 export function blogDetailHandler(c: Context<Env>) {
   const slug = c.req.param("slug") ?? "";
-  const md = posts[slug];
+  const post = posts[slug];
 
-  if (!md) {
+  if (!post) {
     return c.html(
       layout("<p>Blog post not found.</p>", {
         title: "db-blog",
@@ -65,8 +56,6 @@ export function blogDetailHandler(c: Context<Env>) {
       404,
     );
   }
-
-  const blogHtml = renderMarkdown(md);
 
   const body = `
 <div id="scroll-progress-container">
@@ -84,7 +73,7 @@ export function blogDetailHandler(c: Context<Env>) {
         </nav>
     </aside>
     <div class="blog-main" id="blog-content">
-        ${blogHtml}
+        ${post.html}
     </div>
 </div>`;
 

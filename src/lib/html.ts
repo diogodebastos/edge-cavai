@@ -30,20 +30,35 @@ export function layout(body: string, opts: LayoutOptions = {}): string {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Signika:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Signika:wght@400;600&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Signika:wght@400;600&display=swap" rel="stylesheet">
     ${cssLinks}
-    <script async src="https://www.googletagmanager.com/gtag/js?id=${GA_ID}"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', '${GA_ID}');
-    </script>
 </head>
 <body${bodyClass}>
     ${body}
     ${jsScripts}
     ${inlineScript}
+    <script>
+      (function(){
+        function loadGA(){
+          if (window.__ga_loaded) return; window.__ga_loaded = true;
+          var s = document.createElement('script');
+          s.async = true;
+          s.src = 'https://www.googletagmanager.com/gtag/js?id=${GA_ID}';
+          document.head.appendChild(s);
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          window.gtag = gtag;
+          gtag('js', new Date());
+          gtag('config', '${GA_ID}');
+        }
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(loadGA, { timeout: 4000 });
+        } else {
+          setTimeout(loadGA, 2500);
+        }
+      })();
+    </script>
 </body>
 </html>`;
 }

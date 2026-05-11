@@ -1,12 +1,27 @@
 /* ── Brand tokens ── */
 :root {
-  --purple-gradient: linear-gradient(90deg, #9179eb 0%, #6c38fa 100%);
+  --purple-gradient: linear-gradient(120deg, #9179eb 0%, #6c38fa 55%, #4a1fb8 100%);
   --purple-gradient-inverse: linear-gradient(180deg, #9179eb 0%, #6c38fa 100%);
   --chat-bg: #8A2BE2;
   --ai-color: #A6FFA3;
   --user-color: #FFF7F6;
   --bg-color: #28044A;
   --darkest: #6c38fa;
+
+  /* ── Liquid glass tokens ── */
+  --glass-tint:        rgba(255, 255, 255, 0.10);
+  --glass-tint-strong: rgba(255, 255, 255, 0.18);
+  --glass-tint-soft:   rgba(255, 255, 255, 0.06);
+  --glass-stroke:      rgba(255, 255, 255, 0.28);
+  --glass-stroke-soft: rgba(255, 255, 255, 0.16);
+  --glass-highlight:   rgba(255, 255, 255, 0.55);
+  --glass-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.35) inset,
+    0 -1px 0 rgba(255, 255, 255, 0.08) inset,
+    0 8px 32px rgba(20, 0, 60, 0.28),
+    0 2px 8px rgba(20, 0, 60, 0.18);
+  --glass-blur: 14px;
+  --glass-radius: 18px;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -16,30 +31,62 @@ html, body {
   min-height: 100vh;
 }
 
-/* ── Noise overlay ── */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noisy' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.50' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noisy)' opacity='0.15'/%3E%3C/svg%3E");
-  opacity: 0.3;
-  z-index: 1;
+
+
+/* ── Reusable glass surface ── */
+.glass {
+  position: relative;
+  background: var(--glass-tint);
+  border: 1px solid var(--glass-stroke);
+  border-radius: var(--glass-radius);
+  box-shadow: var(--glass-shadow);
+  isolation: isolate;
 }
+.glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0) 35%),
+    radial-gradient(120% 80% at 50% -10%, rgba(255,255,255,0.35), transparent 60%);
+  mix-blend-mode: screen;
+  opacity: 0.7;
+  z-index: 0;
+}
+.glass > * { position: relative; z-index: 1; }
+
+.glass-strong { background: var(--glass-tint-strong); }
+.glass-soft   { background: var(--glass-tint-soft);   }
 
 /* ── Shared buttons ── */
 .theme-toggle-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 50%;
   width: 40px;
   height: 40px;
   color: var(--ai-color);
-  background-color: #9179eb;
-  border: none;
+  background: var(--glass-tint-strong);
+  border: 1px solid var(--glass-stroke);
+  box-shadow: var(--glass-shadow);
   cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+  padding: 0;
 }
 .theme-toggle-button:hover {
-  background-color: var(--darkest);
+  background: rgba(255,255,255,0.28);
+  transform: translateY(-1px);
 }
+.theme-icon {
+  width: 20px;
+  height: 20px;
+  display: block;
+  transition: transform 0.3s ease;
+}
+.theme-toggle-button:hover .theme-icon { transform: rotate(20deg); }
 
 /* ── Scroll progress bar ── */
 #scroll-progress-container {
@@ -48,20 +95,21 @@ body::before {
   left: 0;
   width: 100%;
   height: 4px;
-  background: rgba(0, 0, 0, 0.05);
+  background: rgba(255, 255, 255, 0.10);
   z-index: 9999;
 }
 #scroll-progress-bar {
   height: 100%;
   width: 0%;
-  background: #9179eb;
+  background: linear-gradient(90deg, var(--ai-color), #9179eb 60%, #ff5ac8);
+  box-shadow: 0 0 12px rgba(166, 255, 163, 0.6);
   transition: width 0.15s ease-out;
 }
 
 /* ── Dark theme overrides ── */
 .dark-theme #scroll-progress-container {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.10);
 }
 .dark-theme #scroll-progress-bar {
-  background: var(--ai-color);
+  background: linear-gradient(90deg, var(--ai-color), #fff);
 }
