@@ -14,16 +14,16 @@
     <style>
     html, body {
       background: var(--purple-gradient);
-      font-family: 'Signika', sans-serif;
+      font-family: var(--font-display);
       color: var(--user-color);
     }
 
     .vibe-container {
       position: relative;
       z-index: 2;
-      max-width: 1400px;
+      max-width: var(--content-max-width);
       margin: 0 auto;
-      padding: 0 clamp(1rem, 5vw, 3rem) clamp(1rem, 5vw, 3rem);
+      padding: 0 clamp(var(--space-4), 5vw, 3rem) clamp(var(--space-4), 5vw, 3rem);
     }
 
     /* ── Hero ── */
@@ -69,7 +69,7 @@
       font-size: var(--text-md);
       line-height: 1.55;
       color: rgba(255,255,255,0.78);
-      max-width: 52ch;
+      max-width: var(--content-measure);
     }
 
     /* ── Grid ── */

@@ -2,7 +2,7 @@
 html, body {
   height: 100%;
   background: var(--purple-gradient);
-  font-family: 'Signika', sans-serif;
+  font-family: var(--font-display);
   color: var(--user-color);
 }
 
@@ -12,7 +12,9 @@ html, body {
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding: clamp(1rem, 5vw, 3rem);
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: clamp(var(--space-4), 5vw, 3rem);
 }
 
 /* Fuse the site-header into the chat card so it reads as one surface */
@@ -202,7 +204,7 @@ html, body {
   font-size: var(--text-md);
   line-height: 1.5;
   color: rgba(255,255,255,0.82);
-  max-width: 52ch;
+  max-width: var(--content-measure);
 }
 .suggestion-chips {
   display: flex;
@@ -251,7 +253,7 @@ html, body {
   flex: 1;
   min-height: 48px;
   padding: 0 var(--space-4);
-  font-family: 'Signika', sans-serif;
+  font-family: var(--font-display);
   font-size: var(--text-base);
   line-height: 1.5;
   color: var(--user-color);
@@ -277,7 +279,7 @@ html, body {
   gap: var(--space-2);
   min-height: 48px;
   padding: 0 var(--space-5);
-  font-family: 'Signika', sans-serif;
+  font-family: var(--font-display);
   font-size: var(--text-base);
   font-weight: 600;
   line-height: 1.5;
@@ -319,7 +321,6 @@ html, body {
 
 /* ── Mobile ── */
 @media (max-width: 640px) {
-  .chat-container { padding: var(--space-3); }
   .card-header { padding: var(--space-3); }
   .nav-pill-quiet { margin-left: 0; }
   .hero-title { font-size: var(--text-2xl); }
