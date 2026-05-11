@@ -7,47 +7,58 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Signika:wght@400;600&display=swap">
-    <link href="https://fonts.googleapis.com/css2?family=Signika:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Signika:wght@400;600;700&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Signika:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/shared.css">
     <link rel="stylesheet" href="/css/chat.css">
+    <script>(function(){try{var t=localStorage.getItem('theme');if(t==='dark')document.documentElement.dataset.theme='dark';else if(t==='light')document.documentElement.dataset.theme='light';}catch(e){}document.addEventListener('DOMContentLoaded',function(){var t=document.documentElement.dataset.theme;if(t==='dark')document.body.classList.add('dark-theme');else if(t==='light')document.body.classList.remove('dark-theme');});})();</script>
 </head>
 <body>
 <div class="chat-container" id="chatContainer">
+  <header class="site-header">
+    <nav class="nav-pills" aria-label="Primary" style="width:100%;">
+      <a href="/" class="nav-pill is-current" aria-current="page">Chat</a>
+      <a href="/cv" class="nav-pill">CV</a>
+      <a href="/blog" class="nav-pill">Blog</a>
+      <button type="button" class="nav-pill nav-pill-reset" id="reset-chat" hidden aria-label="New chat">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>
+        <span>New chat</span>
+      </button>
+      <a href="/vibe-coding" class="nav-pill nav-pill-quiet"><span aria-hidden="true">✦</span> vibe-coding</a>
+      <button class="theme-toggle-button" id="theme-toggle" aria-label="Switch theme" type="button">&#9728;&#65038;</button>
+    </nav>
+  </header>
   <div class="card">
-    <div class="card-header">
-      <a href="/vibe-coding" style="float: right;">&#128073; <i>vibe-coding</i></a>
-      <a href="/cv" style="font-weight: bold;">Diogo's CV &#128072;</a> | <a href="/blog">&#128073; blog</a>
-    </div>
     <div class="card-body messages-box">
-      <ul class="messages-list">
-        <li class="message received">
-          <div class="message-text">
-            <div class="message-sender"><b></b></div>
-            <div class="message-content">
-              <p><b>Try talking with my CV:</b></p>
-              <p>
-                Paste a job description for a quick fit check.<br>
-                What are Diogo's top strengths?<br>
-                Does he match this role? Why/why not?
-              </p>
-            </div>
-          </div>
-        </li>
-      </ul>
+      <section class="chat-hero" data-stagger>
+        <p class="eyebrow">Chat with my CV</p>
+        <h1 class="hero-title">Hi, I'm Diogo.</h1>
+        <p class="hero-sub">Ask anything about my work — or paste a job description for a quick fit check.</p>
+        <div class="suggestion-chips" role="group" aria-label="Suggested prompts">
+          <button type="button" class="chip" data-prompt="What are Diogo's top strengths?">Top strengths?</button>
+          <button type="button" class="chip" data-prompt="Does Diogo match a senior AI engineering role? Why or why not?">Fit for a role?</button>
+          <button type="button" class="chip" data-prompt="What has Diogo built recently?">What's he built?</button>
+        </div>
+      </section>
+      <ul class="messages-list"></ul>
     </div>
   </div>
   <form class="message-form">
     <div class="input-group">
-      <input type="text" class="message-input" placeholder="Ask about Diogo or paste a job description...">
-      <button type="submit" class="btn-send">Send</button>
+      <input type="text" class="message-input" placeholder="Ask about Diogo or paste a job description…" aria-label="Message">
+      <button type="submit" class="btn-send" aria-label="Send">
+        <span class="btn-send-label">Send</span>
+        <svg class="btn-send-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
     </div>
   </form>
   <div class="footer">
-    Powered by OpenAI | Built by <a href="https://www.linkedin.com/in/diogodebastos/" target="_blank">db</a>
+    <span class="meta">Powered by OpenAI · Built by <a href="https://www.linkedin.com/in/diogodebastos/" target="_blank" rel="noopener">db</a></span>
   </div>
 </div>
+<script src="/js/theme.js"></script>
 <script src="/js/chat.js"></script>
+<script>if (typeof initTheme === 'function') initTheme('theme-toggle');</script>
 <script>
 (function(){
   function loadGA(){

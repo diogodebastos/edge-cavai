@@ -8,6 +8,26 @@ type LayoutOptions = {
 
 const GA_ID = "G-L58TRTVXWP";
 
+export type NavPage = "chat" | "cv" | "blog" | "vibe";
+
+export function siteNav(current: NavPage): string {
+  const item = (key: NavPage, href: string, label: string, extraClass = "") => {
+    const isCurrent = key === current;
+    const cls = ["nav-pill", extraClass, isCurrent ? "is-current" : ""]
+      .filter(Boolean)
+      .join(" ");
+    const aria = isCurrent ? ' aria-current="page"' : "";
+    return `<a href="${href}" class="${cls}"${aria}>${label}</a>`;
+  };
+  return `<div class="site-header-wrap"><header class="site-header"><nav class="nav-pills" aria-label="Primary">
+    ${item("chat", "/", "Chat")}
+    ${item("cv", "/cv", "CV")}
+    ${item("blog", "/blog", "Blog")}
+    ${item("vibe", "/vibe-coding", `<span aria-hidden="true">✦</span> vibe-coding`, "nav-pill-quiet")}
+    <button class="theme-toggle-button" id="theme-toggle" aria-label="Switch theme" type="button">&#9728;&#65038;</button>
+  </nav></header></div>`;
+}
+
 export function layout(body: string, opts: LayoutOptions = {}): string {
   const title = opts.title ?? "db";
   const cssLinks = (opts.css ?? [])
@@ -30,9 +50,10 @@ export function layout(body: string, opts: LayoutOptions = {}): string {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Signika:wght@400;600&display=swap">
-    <link href="https://fonts.googleapis.com/css2?family=Signika:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Signika:wght@400;600;700&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Signika:wght@400;600;700&display=swap" rel="stylesheet">
     ${cssLinks}
+    <script>(function(){try{var t=localStorage.getItem('theme');if(t==='dark')document.documentElement.dataset.theme='dark';else if(t==='light')document.documentElement.dataset.theme='light';}catch(e){}document.addEventListener('DOMContentLoaded',function(){var t=document.documentElement.dataset.theme;if(t==='dark')document.body.classList.add('dark-theme');else if(t==='light')document.body.classList.remove('dark-theme');});})();</script>
 </head>
 <body${bodyClass}>
     ${body}

@@ -1,7 +1,7 @@
 import type { Context } from "hono";
 import type { Env } from "../types";
 import cvHtml from "../content/cv-html";
-import { layout } from "../lib/html";
+import { layout, siteNav } from "../lib/html";
 
 export function cvHandler(c: Context<Env>) {
 
@@ -9,11 +9,11 @@ export function cvHandler(c: Context<Env>) {
 <div id="scroll-progress-container">
     <div id="scroll-progress-bar"></div>
 </div>
+<div data-html2canvas-ignore="true">${siteNav("cv")}</div>
 <div class="cv-layout" id="cv-layout">
     <aside class="cv-sidebar" data-html2canvas-ignore="true">
         <div class="cv-actions">
             <button class="download-pdf-button" id="download-pdf">Download CV</button>
-            <button class="theme-toggle-button" id="theme-toggle" aria-label="Switch to Light Mode">&#9728;&#65038;</button>
         </div>
         <nav class="cv-toc" id="cv-toc" aria-label="Table of contents">
             <h2>Contents</h2>

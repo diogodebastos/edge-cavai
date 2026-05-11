@@ -1,12 +1,12 @@
 import type { Context } from "hono";
 import type { Env } from "../types";
-import { layout } from "../lib/html";
+import { layout, siteNav } from "../lib/html";
 
 import posts from "../content/blog/index";
 
 function getPostList() {
   return Object.entries(posts)
-    .map(([slug, p]) => ({ slug, title: p.title }))
+    .map(([slug, p]) => ({ slug, title: p.title, excerpt: p.excerpt, minutes: p.minutes }))
     .sort((a, b) => {
       const na = Number((a.slug.match(/\d+$/) || [0])[0]);
       const nb = Number((b.slug.match(/\d+$/) || [0])[0]);
@@ -14,23 +14,42 @@ function getPostList() {
     });
 }
 
+function escapeHtml(s: string) {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
 export function blogListHandler(c: Context<Env>) {
   const list = getPostList();
   const cards = list.length
     ? list
         .map(
-          (p) =>
-            `<a href="/blog/${p.slug}" class="blog-card"><h2>${p.title}</h2></a>`,
+          (p) => `<a href="/blog/${p.slug}" class="blog-card">
+      <div class="blog-card-body">
+        <h2>${escapeHtml(p.title)}</h2>
+        ${p.excerpt ? `<p class="blog-card-excerpt">${escapeHtml(p.excerpt)}</p>` : ""}
+        <p class="blog-card-meta"><span>${p.minutes} min read</span></p>
+      </div>
+      <span class="blog-card-arrow" aria-hidden="true">→</span>
+    </a>`,
         )
         .join("\n    ")
     : "<p>No posts yet.</p>";
 
   const body = `
+${siteNav("blog")}
 <div class="blog-list-container">
-    <a href="/" class="back-link">&larr; back to chat</a>
-    <h1>Blog</h1>
-    <p class="subtitle">Thoughts, experiments, and project write-ups.</p>
+    <header class="blog-list-header">
+      <p class="eyebrow">Writing</p>
+      <h1>Blog</h1>
+      <p class="subtitle">Thoughts, experiments, and project write-ups.</p>
+    </header>
+    <div class="blog-cards" data-stagger>
     ${cards}
+    </div>
 </div>`;
 
   return c.html(
@@ -38,6 +57,8 @@ export function blogListHandler(c: Context<Env>) {
       title: "db-blog",
       css: ["/css/shared.css", "/css/blog.css"],
       bodyClass: "dark-theme",
+      js: ["/js/theme.js"],
+      inlineScript: `if (typeof initTheme === 'function') initTheme('theme-toggle');`,
     }),
   );
 }
@@ -61,16 +82,17 @@ export function blogDetailHandler(c: Context<Env>) {
 <div id="scroll-progress-container">
     <div id="scroll-progress-bar"></div>
 </div>
+${siteNav("blog")}
 <div class="blog-layout" id="blog-layout">
     <aside class="blog-sidebar">
         <div class="blog-actions">
             <a href="/blog" class="back-blog-button">&larr; All Posts</a>
-            <button class="theme-toggle-button" id="theme-toggle" aria-label="Switch to Light Mode">&#9728;&#65038;</button>
         </div>
         <nav class="blog-toc" id="blog-toc" aria-label="Table of contents">
             <h2>Contents</h2>
             <ul class="toc-list"></ul>
         </nav>
+        <p class="blog-meta-aside">${post.minutes} min read</p>
     </aside>
     <div class="blog-main" id="blog-content">
         ${post.html}

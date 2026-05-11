@@ -11,6 +11,7 @@ function buildToc(contentId, tocId) {
 
   var headings = content.querySelectorAll('h1, h2, h3');
   var slugCounts = {};
+  var items = [];
 
   headings.forEach(function (heading, index) {
     var text = heading.textContent.trim();
@@ -35,23 +36,52 @@ function buildToc(contentId, tocId) {
 
     var item = document.createElement('li');
     item.classList.add('toc-level-' + level);
+    item.dataset.slug = slug;
     var link = document.createElement('a');
     link.href = '#' + slug;
     link.textContent = text;
     item.appendChild(link);
     tocList.appendChild(item);
+    items.push({ heading: heading, item: item });
   });
 
-  if (!tocList.children.length) {
+  if (!items.length) {
     tocNav.style.display = 'none';
-  } else {
-    tocNav.addEventListener('click', function (event) {
-      if (event.target instanceof HTMLAnchorElement) {
-        event.preventDefault();
-        var targetId = event.target.getAttribute('href').slice(1);
-        var target = document.getElementById(targetId);
-        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    });
+    return;
   }
+
+  tocNav.addEventListener('click', function (event) {
+    if (event.target instanceof HTMLAnchorElement) {
+      event.preventDefault();
+      var targetId = event.target.getAttribute('href').slice(1);
+      var target = document.getElementById(targetId);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+
+  // Scroll-spy via IntersectionObserver
+  if (!('IntersectionObserver' in window)) return;
+
+  var lookup = {};
+  items.forEach(function (it) { lookup[it.heading.id] = it.item; });
+  var visible = new Set();
+
+  function refresh() {
+    var firstVisible = null;
+    items.forEach(function (it) {
+      if (visible.has(it.heading.id) && !firstVisible) firstVisible = it;
+    });
+    items.forEach(function (it) { it.item.classList.remove('is-active'); });
+    if (firstVisible) firstVisible.item.classList.add('is-active');
+  }
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) visible.add(e.target.id);
+      else visible.delete(e.target.id);
+    });
+    refresh();
+  }, { rootMargin: '-80px 0px -65% 0px', threshold: 0 });
+
+  items.forEach(function (it) { io.observe(it.heading); });
 }

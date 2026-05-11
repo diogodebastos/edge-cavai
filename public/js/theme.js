@@ -2,7 +2,18 @@
  * Initialize dark/light theme toggle.
  * @param {string} buttonId - ID of the toggle button
  */
+var THEME_KEY = 'theme';
+
+function applyStoredTheme() {
+  try {
+    var stored = localStorage.getItem(THEME_KEY);
+    if (stored === 'dark') document.body.classList.add('dark-theme');
+    else if (stored === 'light') document.body.classList.remove('dark-theme');
+  } catch (e) {}
+}
+
 function initTheme(buttonId) {
+  applyStoredTheme();
   var button = document.getElementById(buttonId);
   if (!button) return;
 
@@ -31,9 +42,10 @@ function initTheme(buttonId) {
     }
   }
 
-  // Toggle theme and update icon
+  // Toggle theme, persist, and update icon
   button.addEventListener('click', function () {
-    document.body.classList.toggle('dark-theme');
+    var isDark = document.body.classList.toggle('dark-theme');
+    try { localStorage.setItem(THEME_KEY, isDark ? 'dark' : 'light'); } catch (e) {}
     updateButton();
   });
 

@@ -5,16 +5,24 @@ var messagesList = document.querySelector('.messages-list');
 var messageForm = document.querySelector('.message-form');
 var messageInput = document.querySelector('.message-input');
 var messagesBox = document.querySelector('.messages-box');
+var chatHero = document.querySelector('.chat-hero');
+var resetBtn = document.getElementById('reset-chat');
 
 function typeMessage(element, message) {
+  var caret = document.createElement('span');
+  caret.className = 'typing-caret';
+  caret.textContent = '▍';
+  element.appendChild(caret);
+
   var index = 0;
   function type() {
     if (index < message.length) {
-      element.innerHTML += message.charAt(index);
+      caret.insertAdjacentText('beforebegin', message.charAt(index));
       index++;
       setTimeout(type, 10);
-      element.scrollTop = element.scrollHeight;
       messagesBox.scrollTop = messagesBox.scrollHeight;
+    } else {
+      caret.remove();
     }
   }
   type();
@@ -34,19 +42,18 @@ function appendMessage(role, text) {
   li.classList.add('message', cssClass);
   li.innerHTML =
     '<div class="message-text">' +
-      '<div class="message-sender"><b></b></div>' +
-      '<div class="' + contentClass + '"></div>' +
+      '<div class="' + contentClass + '"><span class="bubble-text"></span></div>' +
     '</div>';
 
   messagesList.appendChild(li);
   messagesBox.scrollTop = messagesBox.scrollHeight;
 
-  var contentEl = li.querySelector('.' + contentClass);
+  var contentEl = li.querySelector('.bubble-text');
 
   if (role === 'assistant') {
     var link = extractLinks(text);
     if (link) {
-      contentEl.innerHTML = '<a href="' + link + '" target="_blank">' + link + '</a>';
+      contentEl.innerHTML = '<a href="' + link + '" target="_blank" rel="noopener">' + link + '</a>';
     } else {
       typeMessage(contentEl, text);
     }
@@ -55,8 +62,20 @@ function appendMessage(role, text) {
   }
 }
 
+function clearPreview() {
+  messagesList.querySelectorAll('.message[data-preview]').forEach(function (el) { el.remove(); });
+}
+
 function sendMessage(message) {
   if (!message) return;
+
+  // Dismiss hero on first user interaction
+  if (chatHero && !chatHero.classList.contains('is-dismissed')) {
+    chatHero.classList.add('is-dismissed');
+    chatHero.style.display = 'none';
+  }
+  clearPreview();
+  if (resetBtn) resetBtn.hidden = false;
 
   appendMessage('user', message);
   chatHistory.push({ role: 'user', content: message });
@@ -82,7 +101,57 @@ messageForm.addEventListener('submit', function (event) {
   sendMessage(message);
 });
 
-// Auto-send initial prompt on load
-window.addEventListener('load', function () {
-  sendMessage("Summarize Diogo's CV in one concise sentence.");
+// Reset / new chat
+function resetChat() {
+  chatHistory = [];
+  messagesList.innerHTML = '';
+  messageInput.value = '';
+  if (chatHero) {
+    chatHero.classList.remove('is-dismissed');
+    chatHero.style.display = '';
+  }
+  if (resetBtn) resetBtn.hidden = true;
+  messageInput.focus();
+}
+if (resetBtn) resetBtn.addEventListener('click', resetChat);
+
+// Default preview interaction on landing — visible demo, not part of chatHistory.
+function appendPreview(role, text, animate) {
+  var li = document.createElement('li');
+  var cssClass = role === 'user' ? 'sent' : 'received';
+  var contentClass = role === 'user' ? 'message-content-USER' : 'message-content-AI';
+  li.classList.add('message', cssClass);
+  li.setAttribute('data-preview', 'true');
+  li.innerHTML = '<div class="message-text"><div class="' + contentClass + '"><span class="bubble-text"></span></div></div>';
+  messagesList.appendChild(li);
+  var contentEl = li.querySelector('.bubble-text');
+  if (animate) typeMessage(contentEl, text);
+  else contentEl.textContent = text;
+}
+
+(function loadPreviewInteraction() {
+  var question = "Summarize Diogo's CV in one concise sentence.";
+  appendPreview('user', question, false);
+  fetch('/api/chat', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ message: question, history: [] }),
+  })
+    .then(function (res) { return res.json(); })
+    .then(function (data) {
+      // If the user already started a real chat, bail.
+      if (chatHistory.length > 0) return;
+      var response = (data.response || '').replace(/^\s+/, '');
+      appendPreview('assistant', response, true);
+    })
+    .catch(function () {});
+})();
+
+// Suggestion chips: prefill + focus, do not auto-send
+document.querySelectorAll('.chip').forEach(function (chip) {
+  chip.addEventListener('click', function () {
+    var prompt = chip.getAttribute('data-prompt') || chip.textContent.trim();
+    messageInput.value = prompt;
+    messageInput.focus();
+  });
 });
