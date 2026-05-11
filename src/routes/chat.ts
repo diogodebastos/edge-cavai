@@ -13,7 +13,7 @@ Style and constraints:
 - Be concise and factual. Prefer one to three short sentences.
 - When asked for a summary, use one crisp sentence.
 - Use plain text with line breaks and hyphen bullets; no tables or code blocks.
-- If asked for the CV or a download link, reply: "Check his CV at https://diogodebastos.vercel.app/cv ".`,
+- If asked for the CV or a download link, reply: "Check his CV at https://edge-cavai.diogobastos.workers.dev/cv ".`,
 };
 
 const CV_CONTEXT: ChatMessage = {
