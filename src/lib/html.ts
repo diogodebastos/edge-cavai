@@ -10,7 +10,7 @@ const GA_ID = "G-L58TRTVXWP";
 
 export type NavPage = "chat" | "cv" | "blog" | "vibe";
 
-export function siteNav(current: NavPage): string {
+export function siteNav(current: NavPage, wrapAttrs = ""): string {
   const item = (key: NavPage, href: string, label: string, extraClass = "") => {
     const isCurrent = key === current;
     const cls = ["nav-pill", extraClass, isCurrent ? "is-current" : ""]
@@ -19,7 +19,8 @@ export function siteNav(current: NavPage): string {
     const aria = isCurrent ? ' aria-current="page"' : "";
     return `<a href="${href}" class="${cls}"${aria}>${label}</a>`;
   };
-  return `<div class="site-header-wrap"><header class="site-header"><nav class="nav-pills" aria-label="Primary">
+  const extra = wrapAttrs ? ` ${wrapAttrs}` : "";
+  return `<div class="site-header-wrap"${extra}><header class="site-header"><nav class="nav-pills" aria-label="Primary">
     ${item("chat", "/", "Chat")}
     ${item("cv", "/cv", "CV")}
     ${item("blog", "/blog", "Blog")}

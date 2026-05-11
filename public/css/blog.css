@@ -201,7 +201,7 @@ body:has(.blog-layout) {
   flex-direction: column;
   gap: var(--space-4);
   position: sticky;
-  top: 80px;
+  top: var(--nav-h, 5rem);
 }
 
 .blog-actions {
@@ -297,7 +297,7 @@ body:has(.blog-layout) {
 .blog-main {
   max-width: 68ch;
   width: 100%;
-  margin: var(--space-2) auto 0;
+  margin: 0 auto;
   padding: var(--space-6) var(--space-6);
   line-height: 1.7;
   font-size: var(--text-md);
@@ -318,6 +318,7 @@ body:has(.blog-layout) {
 #blog-content h3 {
   letter-spacing: -0.01em;
   line-height: 1.2;
+  scroll-margin-top: var(--nav-h, 5rem);
 }
 #blog-content h1 { font-size: var(--text-3xl); margin: 0 0 var(--space-4); }
 #blog-content h2 { font-size: var(--text-xl); margin: var(--space-8) 0 var(--space-3); }

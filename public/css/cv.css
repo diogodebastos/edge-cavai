@@ -27,7 +27,7 @@ body {
   flex-direction: column;
   gap: var(--space-4);
   position: sticky;
-  top: 80px;
+  top: var(--nav-h, 5rem);
 }
 
 .cv-actions {
@@ -104,7 +104,7 @@ body {
 #cv-content {
   max-width: 8.27in;
   width: 100%;
-  margin: var(--space-2) auto 0;
+  margin: 0 auto;
   padding: var(--space-6) var(--space-6);
   line-height: 1.55;
   font-size: var(--text-base);
@@ -137,6 +137,7 @@ body {
   line-height: 1.25;
   break-after: avoid-page;
   page-break-after: avoid;
+  scroll-margin-top: var(--nav-h, 5rem);
 }
 #cv-content h1 { font-size: var(--text-3xl); margin: 0 0 var(--space-3); }
 #cv-content h2 {

@@ -9,7 +9,7 @@ export function cvHandler(c: Context<Env>) {
 <div id="scroll-progress-container">
     <div id="scroll-progress-bar"></div>
 </div>
-<div data-html2canvas-ignore="true">${siteNav("cv")}</div>
+${siteNav("cv", 'data-html2canvas-ignore="true"')}
 <div class="cv-layout" id="cv-layout">
     <aside class="cv-sidebar" data-html2canvas-ignore="true">
         <div class="cv-actions">

@@ -257,14 +257,14 @@ body::after {
   box-shadow: var(--glass-shadow);
   flex-wrap: wrap;
   flex: 0 0 auto;
-  margin-bottom: var(--space-5);
 }
 .site-header-wrap {
-  position: relative;
-  z-index: 2;
+  position: sticky;
+  top: 0;
+  z-index: 100;
   max-width: var(--content-max-width);
   margin: 0 auto;
-  padding: clamp(var(--space-4), 5vw, 3rem) clamp(var(--space-4), 5vw, 3rem) 0;
+  padding: clamp(var(--space-4), 5vw, 3rem) clamp(var(--space-4), 5vw, 3rem) var(--space-5);
 }
 
 /* ── Shared buttons ── */

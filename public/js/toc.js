@@ -1,9 +1,22 @@
 /**
+ * Measure the sticky nav height and expose it as a CSS variable.
+ * Called once on load; sidebar sticky `top` and IO rootMargin use it.
+ */
+function setStickyNavOffset() {
+  var wrap = document.querySelector('.site-header-wrap');
+  if (!wrap) return 0;
+  var h = wrap.getBoundingClientRect().height;
+  document.documentElement.style.setProperty('--nav-h', h + 'px');
+  return h;
+}
+
+/**
  * Build a table of contents from headings inside a content element.
  * @param {string} contentId - ID of the element containing headings
  * @param {string} tocId - ID of the nav element containing ul.toc-list
  */
 function buildToc(contentId, tocId) {
+  var navH = setStickyNavOffset();
   var content = document.getElementById(contentId);
   var tocNav = document.getElementById(tocId);
   var tocList = tocNav ? tocNav.querySelector('.toc-list') : null;
@@ -81,7 +94,7 @@ function buildToc(contentId, tocId) {
       else visible.delete(e.target.id);
     });
     refresh();
-  }, { rootMargin: '-80px 0px -65% 0px', threshold: 0 });
+  }, { rootMargin: '-' + (navH || 80) + 'px 0px -65% 0px', threshold: 0 });
 
   items.forEach(function (it) { io.observe(it.heading); });
 }
