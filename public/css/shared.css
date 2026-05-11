@@ -235,7 +235,6 @@ body::after {
 }
 .nav-pill-quiet {
   opacity: 0.78;
-  font-style: italic;
   font-weight: 400;
 }
 .nav-pill-quiet:hover { opacity: 1; }

@@ -24,7 +24,7 @@ export function siteNav(current: NavPage, wrapAttrs = ""): string {
     ${item("chat", "/", "Chat")}
     ${item("cv", "/cv", "CV")}
     ${item("blog", "/blog", "Blog")}
-    ${item("vibe", "/vibe-coding", `<span aria-hidden="true">✦</span> vibe-coding`, "nav-pill-quiet")}
+    ${item("vibe", "/vibe-coding", `✦`, "nav-pill-quiet")}
     <button class="theme-toggle-button" id="theme-toggle" aria-label="Switch theme" type="button">&#9728;&#65038;</button>
   </nav></header></div>`;
 }
