@@ -421,7 +421,7 @@ body:has(.blog-layout) {
   .blog-meta-aside { padding: 0; }
 }
 @media (max-width: 640px) {
-  .blog-list-container { margin: var(--space-5) auto; }
+  .blog-list-container { margin: 0 auto var(--space-5); }
   .blog-list-container h1 { font-size: var(--text-2xl); }
   .blog-card { padding: var(--space-4); }
   #blog-content h1 { font-size: var(--text-2xl); }
