@@ -284,9 +284,8 @@ body::after {
 }
 .nav-pill-quiet:hover { opacity: 1; }
 
-/* Push the reset button + theme toggle to the far right of the nav bar */
-.nav-pills .nav-pill-reset { margin-left: auto; }
-.nav-pills .nav-pill-reset[hidden] + .theme-toggle-button { margin-left: auto; }
+/* Push the theme toggle to the far right of the nav bar */
+.nav-pills .theme-toggle-button { margin-left: auto; }
 
 /* Standalone glass header bar — same look + position across all pages */
 .site-header {
