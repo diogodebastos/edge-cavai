@@ -21,8 +21,7 @@ const projects: VibeProject[] = [
   { title: "coming soon\u2026",     url: "",                                                                     placeholder: true },
 ];
 
-function renderCard(p: VibeProject, index: number): string {
-  const num = index + 1;
+function renderCard(p: VibeProject, num: number): string {
   const featuredClass = p.featured ? " featured" : "";
 
   if (p.placeholder) {
@@ -54,7 +53,8 @@ function renderCard(p: VibeProject, index: number): string {
 }
 
 export function vibeHandler(c: Context<Env>) {
-  const cards = projects.map((p, i) => renderCard(p, i)).join("\n    ");
+  const total = projects.filter((p) => !p.placeholder).length;
+  const cards = projects.map((p, i) => renderCard(p, total - i)).join("\n    ");
 
   const body = `
 ${siteNav("vibe")}
