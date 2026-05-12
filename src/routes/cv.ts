@@ -1,34 +1,24 @@
 import type { Context } from "hono";
 import type { Env } from "../types";
 import cvHtml from "../content/cv-html";
-import { layout, siteNav } from "../lib/html";
+import { layout, detailPageShell } from "../lib/html";
 
 export function cvHandler(c: Context<Env>) {
 
-  const body = `
-<div id="scroll-progress-container">
-    <div id="scroll-progress-bar"></div>
-</div>
-${siteNav("cv", 'data-html2canvas-ignore="true"')}
-<div class="cv-layout" id="cv-layout">
-    <aside class="cv-sidebar" data-html2canvas-ignore="true">
-        <div class="cv-actions">
-            <button class="download-pdf-button" id="download-pdf">Download CV</button>
-        </div>
-        <nav class="cv-toc" id="cv-toc" aria-label="Table of contents">
-            <h2>Contents</h2>
-            <ul class="toc-list"></ul>
-        </nav>
-    </aside>
-    <div class="cv-main" id="cv-content">
-        ${cvHtml}
-    </div>
-</div>`;
+  const body = detailPageShell({
+    navPage: "cv",
+    navAttrs: 'data-html2canvas-ignore="true"',
+    tocId: "cv-toc",
+    contentId: "cv-content",
+    contentHtml: cvHtml,
+    sidebarActions: `<button class="detail-action-btn" id="download-pdf">Download CV</button>`,
+    sidebarAttrs: 'data-html2canvas-ignore="true"',
+  });
 
   return c.html(
     layout(body, {
       title: "db-cv",
-      css: ["/css/shared.css", "/css/cv.css"],
+      css: ["/css/shared.css", "/css/detail-layout.css", "/css/cv.css"],
       js: [
         "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js",
         "/js/toc.js",

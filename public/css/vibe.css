@@ -1,0 +1,103 @@
+/* ══════════════════════════════════════════════════
+   Vibe-coding page — styles specific to /vibe-coding
+   ══════════════════════════════════════════════════ */
+
+/* ── Card heading bar ── */
+.vibe-card h3 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-md);
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  background: rgba(var(--mint-rgb), 0.85);
+  color: var(--chat-bg);
+  border-bottom: 1px solid var(--glass-stroke-soft);
+}
+.vibe-card h3 a {
+  color: inherit;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* ── Card footer overrides ── */
+.vibe-card .card-footer {
+  padding: var(--space-3) var(--space-4);
+  background: rgba(var(--white-rgb), 0.04);
+  border-top: 1px solid var(--glass-stroke-soft);
+}
+
+/* ── Featured card preview aspect ratio ── */
+.vibe-card.featured .preview-frame { aspect-ratio: 16/9; }
+@supports not (aspect-ratio: 16/9) {
+  .vibe-card.featured .preview-frame { padding-top: 56.25%; }
+}
+
+/* ── Performance hints for iframe cards ── */
+.vibe-card {
+  content-visibility: auto;
+  contain-intrinsic-size: 360px 520px;
+}
+
+/* ── Preview frame ── */
+.preview-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 9/10;
+}
+@supports not (aspect-ratio: 9/10) {
+  .preview-frame { padding-top: 110%; }
+  .preview-frame > * { position: absolute; inset: 0; }
+}
+.preview-frame iframe {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(var(--white-rgb), 0.04);
+  opacity: 0;
+  transition: opacity var(--dur-med) var(--ease-out);
+}
+.preview-frame iframe.is-loaded { opacity: 1; }
+
+/* ── Loading shimmer ── */
+.preview-frame .loading-shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg,
+    rgba(var(--white-rgb), 0.04) 30%,
+    rgba(var(--white-rgb), 0.10) 50%,
+    rgba(var(--white-rgb), 0.04) 70%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+  pointer-events: none;
+}
+.preview-frame .loading-shimmer.is-hidden { display: none; }
+@keyframes shimmer {
+  from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
+}
+
+/* ── Placeholder card ── */
+.preview-frame.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(var(--white-rgb), 0.04);
+}
+.placeholder-emoji {
+  font-size: 3.5rem;
+  line-height: 1;
+  opacity: 0.85;
+  filter: drop-shadow(0 4px 18px rgba(var(--mint-rgb), 0.25));
+}
+
+@media (max-width: 640px) {
+  .vibe-card.featured .preview-frame { aspect-ratio: 9/10; }
+}

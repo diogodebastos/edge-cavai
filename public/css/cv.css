@@ -1,124 +1,16 @@
-/* ── CV page ── */
-body {
-  background: var(--purple-gradient);
-  color: var(--color-white);
-  transition: background var(--dur-med) var(--ease-out), color var(--dur-med) var(--ease-out);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-}
-.dark-theme {
-  background: var(--bg-dark-gradient);
-  color: var(--user-color);
-}
+/* ══════════════════════════════════════════
+   CV — styles specific to /cv
+   (shared detail-layout in its own file)
+   ══════════════════════════════════════════ */
 
-/* ── Layout ── */
-.cv-layout {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  gap: var(--space-6);
-  align-items: flex-start;
-  max-width: var(--content-max-width);
-  margin: 0 auto var(--space-8);
-  padding: 0 clamp(var(--space-4), 5vw, 3rem);
-}
-.cv-sidebar {
-  flex: 0 0 240px;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-  position: sticky;
-  top: var(--nav-h, 5rem);
-}
-
-.cv-actions {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  padding: var(--space-4);
-  background: var(--glass-tint);
-  border: 1px solid var(--glass-stroke);
-  border-radius: var(--glass-radius);
-  box-shadow: var(--glass-shadow);
-}
-
-.download-pdf-button {
-  flex: 1 1 auto;
-  padding: 9px 12px;
-  background: var(--accent-mint);
-  color: var(--chat-bg);
-  border: 1px solid var(--accent-border);
-  border-radius: var(--radius-md);
-  font-family: var(--font-display);
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow:
-    var(--accent-inset),
-    0 4px 12px rgba(var(--mint-rgb),0.3);
-  transition: transform var(--dur-fast) var(--ease-out);
-}
-.download-pdf-button:hover {
-  transform: translateY(-1px);
-  background: var(--accent-mint);
-}
-
-/* ── TOC ── */
-.cv-toc {
-  padding: var(--space-4);
-  background: var(--glass-tint);
-  border: 1px solid var(--glass-stroke);
-  border-radius: var(--glass-radius);
-  box-shadow: var(--glass-shadow);
-  color: var(--color-white);
-}
-.cv-toc h2 {
-  font-size: var(--text-sm);
-  margin: 0 0 var(--space-3);
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-  opacity: 0.7;
-  font-weight: 600;
-}
-.cv-toc ul { list-style: none; padding: 0; margin: 0; }
-.cv-toc li { margin-bottom: var(--space-1); line-height: 1.35; }
-.cv-toc a {
-  display: block;
-  padding: 0.25rem var(--space-3);
-  color: inherit;
-  text-decoration: none;
-  opacity: 0.7;
-  border-left: 2px solid transparent;
-  transition: opacity var(--dur-fast) var(--ease-out),
-              color var(--dur-fast) var(--ease-out),
-              border-color var(--dur-fast) var(--ease-out);
-}
-.cv-toc a:hover { opacity: 1; text-decoration: none; color: var(--accent-mint); }
-.cv-toc li.is-active > a {
-  opacity: 1;
-  color: var(--accent-mint);
-  border-left-color: var(--accent-mint);
-}
-.cv-toc .toc-level-h2 a { padding-left: var(--space-3); }
-.cv-toc .toc-level-h3 a { padding-left: var(--space-5); font-size: var(--text-sm); }
-
-/* ── Content area: glass panel ── */
+/* ── CV content max-width override (A4 paper) ── */
 #cv-content {
   max-width: 8.27in;
-  width: 100%;
-  margin: 0 auto;
-  padding: var(--space-6) var(--space-6);
   line-height: 1.55;
   font-size: var(--text-base);
+}
 
-  background: rgba(var(--white-rgb),0.10);
-  border: 1px solid var(--glass-stroke);
-  border-radius: var(--glass-radius);
-  box-shadow: var(--glass-shadow);
-  color: var(--color-white);
-}
-.dark-theme #cv-content {
-  background: rgba(var(--white-rgb),0.05);
-  color: var(--user-color);
-}
+/* ── CV content typography ── */
 #cv-content a {
   color: var(--accent-mint);
   text-decoration: none;
@@ -168,24 +60,12 @@ body {
 }
 .cv-subsection:last-child { border-bottom: none; padding-bottom: 0; }
 
-/* ── Responsive ── */
-@media (max-width: 992px) {
-  .cv-layout {
-    flex-direction: column;
-    gap: var(--space-5);
-    padding: 0 clamp(var(--space-4), 5vw, 3rem);
-  }
-  .cv-sidebar { position: static; width: 100%; }
-  .cv-actions { flex-wrap: wrap; gap: var(--space-2); }
-  #cv-content { margin: 0; padding: var(--space-5); }
-}
-
-/* ── Print: kill glass, restore plain ── */
+/* ── Print: restore plain ── */
 @media print {
   body, .dark-theme { background: var(--print-bg); color: var(--print-text); }
   body::before, body::after { display: none !important; }
-  .cv-layout { display: block; max-width: 8.27in; margin: 0 auto; padding: 0; }
-  .cv-sidebar, .cv-toc, #scroll-progress-container { display: none !important; }
+  .detail-layout { display: block; max-width: 8.27in; margin: 0 auto; padding: 0; }
+  .detail-sidebar, .detail-toc, #scroll-progress-container { display: none !important; }
   #cv-content {
     background: var(--print-bg);
     color: var(--print-text);

@@ -6,6 +6,25 @@ type LayoutOptions = {
   inlineScript?: string;
 };
 
+type DetailPageOptions = {
+  /** Which nav pill to highlight */
+  navPage: NavPage;
+  /** Extra attributes on the siteNav wrapper (e.g. data-html2canvas-ignore) */
+  navAttrs?: string;
+  /** HTML for the sidebar actions slot (e.g. back button, download button) */
+  sidebarActions: string;
+  /** Extra attributes on the sidebar element */
+  sidebarAttrs?: string;
+  /** ID for the TOC container */
+  tocId: string;
+  /** Optional sidebar meta line (e.g. "5 min read") */
+  sidebarMeta?: string;
+  /** ID for the main content container */
+  contentId: string;
+  /** The rendered content HTML */
+  contentHtml: string;
+};
+
 const GA_ID = "G-L58TRTVXWP";
 
 /** Must match --brand-purple in shared.css (inline fallback shown before CSS loads) */
@@ -84,4 +103,32 @@ export function layout(body: string, opts: LayoutOptions = {}): string {
     </script>
 </body>
 </html>`;
+}
+
+export function detailPageShell(opts: DetailPageOptions): string {
+  const sidebarExtra = opts.sidebarAttrs ? ` ${opts.sidebarAttrs}` : "";
+  const meta = opts.sidebarMeta
+    ? `<p class="detail-meta-aside">${opts.sidebarMeta}</p>`
+    : "";
+
+  return `
+<div id="scroll-progress-container">
+    <div id="scroll-progress-bar"></div>
+</div>
+${siteNav(opts.navPage, opts.navAttrs)}
+<div class="detail-layout">
+    <aside class="detail-sidebar"${sidebarExtra}>
+        <div class="detail-actions">
+            ${opts.sidebarActions}
+        </div>
+        <nav class="detail-toc" id="${opts.tocId}" aria-label="Table of contents">
+            <h2>Contents</h2>
+            <ul class="toc-list"></ul>
+        </nav>
+        ${meta}
+    </aside>
+    <div class="detail-main" id="${opts.contentId}">
+        ${opts.contentHtml}
+    </div>
+</div>`;
 }
