@@ -326,4 +326,7 @@ html, body {
   .hero-title { font-size: var(--text-2xl); }
   .btn-send-label { display: none; }
   .btn-send { padding: 0 var(--space-4); }
+  .nav-pill-reset span { display: none; }
+  .nav-pill-reset svg { width: 1rem; height: 1rem; }
+
 }
