@@ -27,14 +27,21 @@ export function blogListHandler(c: Context<Env>) {
   const cards = list.length
     ? list
         .map(
-          (p) => `<a href="/blog/${p.slug}" class="blog-card">
+          (p, i) => {
+            const num = Number((p.slug.match(/\d+$/) || [0])[0]);
+            const featured = i === 0 ? ' featured' : '';
+            return `<a href="/blog/${p.slug}" class="blog-card${featured}">
       <div class="blog-card-body">
+        <span class="blog-card-number">#${num}</span>
         <h2>${escapeHtml(p.title)}</h2>
         ${p.excerpt ? `<p class="blog-card-excerpt">${escapeHtml(p.excerpt)}</p>` : ""}
-        <p class="blog-card-meta"><span>${p.minutes} min read</span></p>
       </div>
-      <span class="blog-card-arrow" aria-hidden="true">→</span>
-    </a>`,
+      <div class="blog-card-footer">
+        <p class="blog-card-meta"><span>${p.minutes} min read</span></p>
+        <span class="blog-card-arrow" aria-hidden="true">&#x203A;</span>
+      </div>
+    </a>`;
+          },
         )
         .join("\n    ")
     : "<p>No posts yet.</p>";
