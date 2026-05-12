@@ -4,7 +4,7 @@
 
 ---
 
-I spent a weekend wiring language models like circuit components. The result is [llm-circuits](https://github.com/diogodebastos/llm-circuits): each LLM is a resistor, your prompt is voltage, you compose them with fork/join wiring. The whole thing is one Cloudflare Worker, and every "current" you apply is a real Workers AI call — no mock layer.
+Wiring language models like circuit components. The result is [llm-circuits](https://github.com/diogodebastos/llm-circuits): each LLM is a resistor, your prompt is voltage, you compose them with fork/join wiring. The whole thing is one Cloudflare Worker, and every "current" you apply is a real Workers AI call — no mock layer.
 
 The analogy mostly holds. Where it breaks is the interesting part.
 

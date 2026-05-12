@@ -43,7 +43,6 @@ export function blogListHandler(c: Context<Env>) {
 ${siteNav("blog")}
 <div class="blog-list-container">
     <header class="blog-list-header">
-      <p class="eyebrow">Writing</p>
       <h1>Blog</h1>
       <p class="subtitle">Thoughts, experiments, and project write-ups.</p>
     </header>

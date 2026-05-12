@@ -1,6 +1,6 @@
 # Velvet Blum: a social network with no algorithm and no ads
 
-*A weekend experiment in giving the feed back to the user.*
+*Giving the feed back to the user.*
 
 ---
 
@@ -85,6 +85,6 @@ It's also a much smaller surface. No ranking pipeline, no engagement metrics, no
   - Active-session list and a "log out everywhere" button backed by a per-user session index in KV.
   - Optional TOTP 2FA on top of magic-link, and re-auth prompts for destructive actions (delete account, rotate keys).
   - Passphrase strength meter at signup, plus a key-rotation flow that re-wraps the private key without invalidating message history.
-  - A formal third-party audit of `crypto.ts` and the auth surface before the app leaves "weekend experiment" status.
+  - A formal third-party audit of `crypto.ts` and the auth surface.
 
 Try it: [velvet-blum.pages.dev](https://velvet-blum.pages.dev/). If you make a network, share your lens URL.

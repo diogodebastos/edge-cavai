@@ -1,6 +1,6 @@
 # Wrangler ships your code. Something needs to wire your stack.
 
-*A weekend project, an open question for Cloudflare.*
+*An open question for Cloudflare.*
 
 ---
 
@@ -12,7 +12,7 @@ I want to talk about that gap. Where it comes from, why Agents Week 2026 didn't 
 
 ## The setup
 
-I'm a physics PhD turned data scientist. I love building things and I love Cloudflare. The agent-driven workflow Cloudflare has been pushing — Workers + Agents SDK + the API MCP server + the Skills plugin — feels like the right shape of the future. So I sat down this weekend with Claude Code and tried to build a small chat app on Workers using nothing but prompts.
+I'm a physics PhD turned data scientist. I love building things and I love Cloudflare. The agent-driven workflow Cloudflare has been pushing — Workers + Agents SDK + the API MCP server + the Skills plugin — feels like the right shape of the future. So I sat down with Claude Code and tried to build a small chat app on Workers using nothing but prompts.
 
 The code came out clean. A `fetch` handler, a Durable Object, a few `env.X` references for D1, KV, R2, a queue. Three minutes.
 
@@ -62,7 +62,7 @@ The wait is the failure. Every wait is the agent-flow leaking out into a human-f
 
 ## Binding Doctor
 
-I wrote `binding-doctor` (`bdr`) over a weekend. It's tiny — six TypeScript files, ~600 lines — and it does exactly one thing:
+I wrote `binding-doctor` (`bdr`). It's tiny — six TypeScript files, ~600 lines — and it does exactly one thing:
 
 ```
 $ bdr diff
@@ -118,7 +118,7 @@ Three reasons it belongs in the platform:
 
 ## What's next
 
-`bdr` is on GitHub: github.com/diogodebastos/binding-doctor. MIT-licensed. The 90-second demo is in the repo. PRs welcome — vectorize is functional but the dimensions/metric should come from a code annotation, queues should auto-wire consumers when a `queue` handler is found, secrets need a `.env.doctor` template path. All weekend-2 work.
+`bdr` is on GitHub: github.com/diogodebastos/binding-doctor. MIT-licensed. The 90-second demo is in the repo. PRs welcome — vectorize is functional but the dimensions/metric should come from a code annotation, queues should auto-wire consumers when a `queue` handler is found, secrets need a `.env.doctor` template path.
 
 I'd love to build the next version of this inside Cloudflare. The agent-first pitch I keep hearing in the keynotes is the pitch I want to ship. If anyone reading this knows the right person — DevRel, Workers, Agents — I'm at diogodebastos18@gmail.com.
 
