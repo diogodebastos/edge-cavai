@@ -59,8 +59,20 @@ function appendMessage(role, text) {
       typeMessage(contentEl, text);
     }
   } else {
-    typeMessage(contentEl, text);
+    contentEl.textContent = text;
   }
+
+  return li;
+}
+
+function appendThinking(isPreview) {
+  var li = document.createElement('li');
+  li.classList.add('message', 'received');
+  if (isPreview) li.setAttribute('data-preview', 'true');
+  li.innerHTML = '<div class="message-text"><div class="message-content-AI"><span class="bubble-text thinking-text">Thinking…</span></div></div>';
+  messagesList.appendChild(li);
+  messagesBox.scrollTop = messagesBox.scrollHeight;
+  return li;
 }
 
 function clearPreview() {
@@ -81,6 +93,8 @@ function sendMessage(message) {
   appendMessage('user', message);
   chatHistory.push({ role: 'user', content: message });
 
+  var thinkingEl = appendThinking(false);
+
   fetch('/api/chat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -91,11 +105,13 @@ function sendMessage(message) {
       return res.json();
     })
     .then(function (data) {
+      thinkingEl.remove();
       var response = (data.response || '').replace(/^\s+/, '');
       appendMessage('assistant', response);
       chatHistory.push({ role: 'assistant', content: response });
     })
     .catch(function () {
+      thinkingEl.remove();
       appendMessage('assistant', 'Sorry, something went wrong. Please try again.');
     });
 }
@@ -134,11 +150,13 @@ function appendPreview(role, text, animate) {
   var contentEl = li.querySelector('.bubble-text');
   if (animate) typeMessage(contentEl, text);
   else contentEl.textContent = text;
+  return li;
 }
 
 (function loadPreviewInteraction() {
   var question = "Summarize Diogo's CV in one concise sentence.";
   appendPreview('user', question, false);
+  var thinkingPreview = appendThinking(true);
   fetch('/api/chat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -148,10 +166,11 @@ function appendPreview(role, text, animate) {
     .then(function (data) {
       // If the user already started a real chat, bail.
       if (chatHistory.length > 0) return;
+      thinkingPreview.remove();
       var response = (data.response || '').replace(/^\s+/, '');
       appendPreview('assistant', response, true);
     })
-    .catch(function () {});
+    .catch(function () { thinkingPreview.remove(); });
 })();
 
 // Suggestion chips: prefill + focus, do not auto-send
