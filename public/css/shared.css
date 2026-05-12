@@ -1,6 +1,18 @@
 /* ── Brand tokens ── */
 :root {
-  --purple-gradient: linear-gradient(120deg, #9179eb 0%, #6c38fa 55%, #4a1fb8 100%);
+  /* ── Base color palette ── */
+  --color-white: #fff;
+  --color-black: #000;
+  --brand-purple: #4a1fb8;
+
+  /* RGB channels (for rgba() usage) */
+  --white-rgb: 255, 255, 255;
+  --black-rgb: 0, 0, 0;
+  --mint-rgb: 166, 255, 163;
+  --shadow-rgb: 20, 0, 60;
+
+  /* ── Semantic colors ── */
+  --purple-gradient: linear-gradient(120deg, #9179eb 0%, #6c38fa 55%, var(--brand-purple) 100%);
   --purple-gradient-inverse: linear-gradient(180deg, #9179eb 0%, #6c38fa 100%);
   --chat-bg: #8A2BE2;
   --ai-color: #A6FFA3;
@@ -12,25 +24,54 @@
   --accent-pink: #ff5ac8;
   --accent-violet: #9179eb;
 
+  /* ── Text opacity variants ── */
+  --text-bright:  rgba(var(--white-rgb), 0.82);
+  --text-muted:   rgba(var(--white-rgb), 0.55);
+  --text-soft:    rgba(var(--white-rgb), 0.75);
+
+  /* ── Accent button tokens ── */
+  --accent-border:      rgba(var(--white-rgb), 0.4);
+  --accent-border-hover: rgba(var(--white-rgb), 0.55);
+  --accent-inset:       0 1px 0 rgba(var(--white-rgb), 0.6) inset;
+  --accent-glow:        0 4px 14px rgba(var(--mint-rgb), 0.30);
+  --accent-glow-hover:  0 8px 22px rgba(var(--mint-rgb), 0.50);
+
+  /* ── Glass sheen (::before overlay on glass surfaces) ── */
+  --glass-sheen:
+    linear-gradient(180deg, rgba(var(--white-rgb), 0.22) 0%, rgba(var(--white-rgb), 0) 35%),
+    radial-gradient(120% 80% at 50% -10%, rgba(var(--white-rgb), 0.35), transparent 60%);
+  --glass-sheen-narrow:
+    linear-gradient(180deg, rgba(var(--white-rgb), 0.22) 0%, rgba(var(--white-rgb), 0) 32%),
+    radial-gradient(120% 70% at 50% -10%, rgba(var(--white-rgb), 0.35), transparent 60%);
+  --glass-sheen-wide:
+    linear-gradient(180deg, rgba(var(--white-rgb), 0.22) 0%, rgba(var(--white-rgb), 0) 40%),
+    radial-gradient(120% 70% at 50% -10%, rgba(var(--white-rgb), 0.35), transparent 60%);
+
   /* ── Liquid glass tokens ── */
-  --glass-tint:        rgba(255, 255, 255, 0.10);
-  --glass-tint-strong: rgba(255, 255, 255, 0.18);
-  --glass-tint-soft:   rgba(255, 255, 255, 0.06);
-  --glass-stroke:      rgba(255, 255, 255, 0.28);
-  --glass-stroke-soft: rgba(255, 255, 255, 0.16);
-  --glass-highlight:   rgba(255, 255, 255, 0.55);
+  --glass-tint:        rgba(var(--white-rgb), 0.10);
+  --glass-tint-strong: rgba(var(--white-rgb), 0.18);
+  --glass-tint-soft:   rgba(var(--white-rgb), 0.06);
+  --glass-stroke:      rgba(var(--white-rgb), 0.28);
+  --glass-stroke-soft: rgba(var(--white-rgb), 0.16);
+  --glass-highlight:   rgba(var(--white-rgb), 0.55);
   --glass-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.35) inset,
-    0 -1px 0 rgba(255, 255, 255, 0.08) inset,
-    0 8px 32px rgba(20, 0, 60, 0.28),
-    0 2px 8px rgba(20, 0, 60, 0.18);
+    0 1px 0 rgba(var(--white-rgb), 0.35) inset,
+    0 -1px 0 rgba(var(--white-rgb), 0.08) inset,
+    0 8px 32px rgba(var(--shadow-rgb), 0.28),
+    0 2px 8px rgba(var(--shadow-rgb), 0.18);
   --glass-shadow-hover:
-    0 1px 0 rgba(255, 255, 255, 0.45) inset,
-    0 -1px 0 rgba(255, 255, 255, 0.08) inset,
-    0 14px 40px rgba(20, 0, 60, 0.35),
-    0 4px 14px rgba(20, 0, 60, 0.22);
+    0 1px 0 rgba(var(--white-rgb), 0.45) inset,
+    0 -1px 0 rgba(var(--white-rgb), 0.08) inset,
+    0 14px 40px rgba(var(--shadow-rgb), 0.35),
+    0 4px 14px rgba(var(--shadow-rgb), 0.22);
   --glass-blur: 24px;
   --glass-radius: 18px;
+
+  /* ── Print colors ── */
+  --print-bg: #fff;
+  --print-text: #000;
+  --print-border: #ccc;
+  --print-border-soft: #ddd;
 
   /* ── Type scale (modular ~1.2) ── */
   --text-xs:   0.78rem;
@@ -59,7 +100,10 @@
   --font-display: 'Signika', sans-serif;
 
   /* ── Dark theme background ── */
-  --bg-dark-gradient: linear-gradient(160deg, #0a0014 0%, #1a0033 60%, #06000f 100%);
+  --dark-deepest: #0a0014;
+  --dark-mid:     #1a0033;
+  --dark-edge:    #06000f;
+  --bg-dark-gradient: linear-gradient(160deg, var(--dark-deepest) 0%, var(--dark-mid) 60%, var(--dark-edge) 100%);
 
   /* ── Radius ── */
   --radius-sm: 8px;
@@ -88,7 +132,7 @@
 *, *::before, *::after { box-sizing: border-box; }
 
 html {
-  background: #4a1fb8;
+  background: var(--brand-purple);
 }
 
 html, body {
@@ -168,8 +212,8 @@ body::after {
   border-radius: inherit;
   pointer-events: none;
   background:
-    linear-gradient(180deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0) 35%),
-    radial-gradient(120% 80% at 50% -10%, rgba(255,255,255,0.35), transparent 60%);
+    linear-gradient(180deg, rgba(var(--white-rgb),0.22) 0%, rgba(var(--white-rgb),0) 35%),
+    radial-gradient(120% 80% at 50% -10%, rgba(var(--white-rgb),0.35), transparent 60%);
   mix-blend-mode: screen;
   opacity: 0.7;
   z-index: 0;
@@ -220,10 +264,10 @@ body::after {
 .nav-pill-primary {
   background: var(--accent-mint);
   color: var(--chat-bg);
-  border-color: rgba(255,255,255,0.4);
+  border-color: rgba(var(--white-rgb),0.4);
   box-shadow:
-    0 1px 0 rgba(255,255,255,0.6) inset,
-    0 4px 14px rgba(166,255,163,0.30);
+    0 1px 0 rgba(var(--white-rgb),0.6) inset,
+    0 4px 14px rgba(var(--mint-rgb),0.30);
   opacity: 1;
   font-style: normal;
   font-weight: 600;
@@ -232,7 +276,7 @@ body::after {
 .nav-pill-primary:hover {
   background: var(--accent-mint);
   color: var(--chat-bg);
-  border-color: rgba(255,255,255,0.55);
+  border-color: rgba(var(--white-rgb),0.55);
 }
 .nav-pill-quiet {
   opacity: 0.78;
@@ -287,7 +331,7 @@ body::after {
   padding: 0;
 }
 .theme-toggle-button:hover {
-  background: rgba(255,255,255,0.28);
+  background: rgba(var(--white-rgb),0.28);
   transform: translateY(-1px);
 }
 .theme-icon {
@@ -305,14 +349,14 @@ body::after {
   left: 0;
   width: 100%;
   height: 4px;
-  background: rgba(255, 255, 255, 0.10);
+  background: rgba(var(--white-rgb), 0.10);
   z-index: 9999;
 }
 #scroll-progress-bar {
   height: 100%;
   width: 0%;
   background: linear-gradient(90deg, var(--accent-mint), var(--accent-violet) 60%, var(--accent-pink));
-  box-shadow: 0 0 12px rgba(166, 255, 163, 0.6);
+  box-shadow: 0 0 12px rgba(var(--mint-rgb), 0.6);
   transition: width 0.15s ease-out;
 }
 
@@ -322,10 +366,10 @@ body::after {
   background: var(--bg-dark-gradient);
 }
 .dark-theme #scroll-progress-container {
-  background: rgba(255, 255, 255, 0.10);
+  background: rgba(var(--white-rgb), 0.10);
 }
 .dark-theme #scroll-progress-bar {
-  background: linear-gradient(90deg, var(--accent-mint), #fff);
+  background: linear-gradient(90deg, var(--accent-mint), var(--color-white));
 }
 
 /* ── Page-enter fade-up (apply to .fade-in or .glass children of [data-stagger]) ── */

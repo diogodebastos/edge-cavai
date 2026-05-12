@@ -1,7 +1,7 @@
 /* ── CV page ── */
 body {
   background: var(--purple-gradient);
-  color: #fff;
+  color: var(--color-white);
   transition: background var(--dur-med) var(--ease-out), color var(--dur-med) var(--ease-out);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
@@ -46,14 +46,14 @@ body {
   padding: 9px 12px;
   background: var(--accent-mint);
   color: var(--chat-bg);
-  border: 1px solid rgba(255,255,255,0.4);
+  border: 1px solid var(--accent-border);
   border-radius: var(--radius-md);
   font-family: var(--font-display);
   font-weight: 600;
   cursor: pointer;
   box-shadow:
-    0 1px 0 rgba(255,255,255,0.6) inset,
-    0 4px 12px rgba(166,255,163,0.3);
+    var(--accent-inset),
+    0 4px 12px rgba(var(--mint-rgb),0.3);
   transition: transform var(--dur-fast) var(--ease-out);
 }
 .download-pdf-button:hover {
@@ -68,7 +68,7 @@ body {
   border: 1px solid var(--glass-stroke);
   border-radius: var(--glass-radius);
   box-shadow: var(--glass-shadow);
-  color: #fff;
+  color: var(--color-white);
 }
 .cv-toc h2 {
   font-size: var(--text-sm);
@@ -109,14 +109,14 @@ body {
   line-height: 1.55;
   font-size: var(--text-base);
 
-  background: rgba(255,255,255,0.10);
+  background: rgba(var(--white-rgb),0.10);
   border: 1px solid var(--glass-stroke);
   border-radius: var(--glass-radius);
   box-shadow: var(--glass-shadow);
-  color: #fff;
+  color: var(--color-white);
 }
 .dark-theme #cv-content {
-  background: rgba(255,255,255,0.05);
+  background: rgba(var(--white-rgb),0.05);
   color: var(--user-color);
 }
 #cv-content a {
@@ -157,7 +157,7 @@ body {
 #cv-content p { margin: 0 0 var(--space-3); }
 #cv-content ul, #cv-content ol { padding-left: 1.3rem; margin: 0 0 var(--space-3); }
 #cv-content li + li { margin-top: var(--space-2); }
-#cv-content strong { color: #fff; }
+#cv-content strong { color: var(--color-white); }
 
 .cv-subsection {
   margin-bottom: var(--space-5);
@@ -182,13 +182,13 @@ body {
 
 /* ── Print: kill glass, restore plain ── */
 @media print {
-  body, .dark-theme { background: #fff; color: #000; }
+  body, .dark-theme { background: var(--print-bg); color: var(--print-text); }
   body::before, body::after { display: none !important; }
   .cv-layout { display: block; max-width: 8.27in; margin: 0 auto; padding: 0; }
   .cv-sidebar, .cv-toc, #scroll-progress-container { display: none !important; }
   #cv-content {
-    background: #fff;
-    color: #000;
+    background: var(--print-bg);
+    color: var(--print-text);
     border: none;
     box-shadow: none;
     backdrop-filter: none;
@@ -196,7 +196,7 @@ body {
     padding: 0;
     max-width: none;
   }
-  #cv-content a { color: #000; background-image: none; }
-  #cv-content h2 { border-bottom-color: #ccc; }
-  .cv-subsection { border-bottom-color: #ddd; }
+  #cv-content a { color: var(--print-text); background-image: none; }
+  #cv-content h2 { border-bottom-color: var(--print-border); }
+  .cv-subsection { border-bottom-color: var(--print-border-soft); }
 }

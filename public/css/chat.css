@@ -24,8 +24,8 @@ html, body {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
   box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.35) inset,
-    0 -1px 0 rgba(255, 255, 255, 0.08) inset;
+    0 1px 0 rgba(var(--white-rgb), 0.35) inset,
+    0 -1px 0 rgba(var(--white-rgb), 0.08) inset;
 }
 .chat-container > .card {
   border-top: none;
@@ -56,8 +56,8 @@ html, body {
   border-radius: inherit;
   pointer-events: none;
   background:
-    linear-gradient(180deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0) 32%),
-    radial-gradient(120% 70% at 50% -10%, rgba(255,255,255,0.35), transparent 60%);
+    linear-gradient(180deg, rgba(var(--white-rgb),0.22) 0%, rgba(var(--white-rgb),0) 32%),
+    radial-gradient(120% 70% at 50% -10%, rgba(var(--white-rgb),0.35), transparent 60%);
   mix-blend-mode: screen;
   z-index: 0;
 }
@@ -102,7 +102,7 @@ html, body {
 .message {
   list-style: none;
   padding: var(--space-3) var(--space-4);
-  background: rgba(255,255,255,0.08);
+  background: rgba(var(--white-rgb),0.08);
   border: 1px solid var(--glass-stroke-soft);
   border-radius: 14px;
   max-width: 88%;
@@ -144,8 +144,8 @@ html, body {
   letter-spacing: 0.03em;
   margin-top: 0.1rem;
   box-shadow:
-    0 0 0 1px rgba(255,255,255,0.4) inset,
-    0 2px 6px rgba(20,0,60,0.25);
+    0 0 0 1px rgba(var(--white-rgb),0.4) inset,
+    0 2px 6px rgba(var(--shadow-rgb),0.25);
 }
 .message-content-AI::before {
   content: "db";
@@ -194,7 +194,7 @@ html, body {
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.05;
-  background: linear-gradient(110deg, #fff 0%, var(--accent-mint) 60%);
+  background: linear-gradient(110deg, var(--color-white) 0%, var(--accent-mint) 60%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -203,7 +203,7 @@ html, body {
   margin: 0 0 var(--space-5);
   font-size: var(--text-md);
   line-height: 1.5;
-  color: rgba(255,255,255,0.82);
+  color: var(--text-bright);
   max-width: var(--content-measure);
 }
 .suggestion-chips {
@@ -257,20 +257,20 @@ html, body {
   font-size: var(--text-base);
   line-height: 1.5;
   color: var(--user-color);
-  background: rgba(255,255,255,0.08);
+  background: rgba(var(--white-rgb),0.08);
   border: 1px solid var(--glass-stroke-soft);
   border-radius: var(--radius-md);
   transition: border-color var(--dur-fast) var(--ease-out),
               background var(--dur-fast) var(--ease-out),
               box-shadow var(--dur-fast) var(--ease-out);
 }
-.message-input::placeholder { color: rgba(255,255,255,0.55); }
+.message-input::placeholder { color: var(--text-muted); }
 .message-input:focus {
   outline: none;
-  background: rgba(255,255,255,0.14);
+  background: rgba(var(--white-rgb),0.14);
   border-color: var(--accent-mint);
   color: var(--user-color);
-  box-shadow: 0 0 0 3px rgba(166,255,163,0.22);
+  box-shadow: 0 0 0 3px rgba(var(--mint-rgb),0.22);
 }
 
 .btn-send {
@@ -286,19 +286,19 @@ html, body {
   cursor: pointer;
   color: var(--chat-bg);
   background: var(--accent-mint);
-  border: 1px solid rgba(255,255,255,0.4);
+  border: 1px solid var(--accent-border);
   border-radius: var(--radius-md);
   box-shadow:
-    0 1px 0 rgba(255,255,255,0.6) inset,
-    0 4px 14px rgba(166,255,163,0.30);
+    var(--accent-inset),
+    var(--accent-glow);
   transition: transform var(--dur-fast) var(--ease-out),
               box-shadow var(--dur-med) var(--ease-out);
 }
 .btn-send:hover {
   transform: translateY(-1px);
   box-shadow:
-    0 1px 0 rgba(255,255,255,0.7) inset,
-    0 8px 22px rgba(166,255,163,0.50);
+    0 1px 0 rgba(var(--white-rgb),0.7) inset,
+    var(--accent-glow-hover);
 }
 .btn-send:active { transform: translateY(0); }
 .btn-send-icon { transition: transform var(--dur-med) var(--ease-spring); }
@@ -309,12 +309,12 @@ html, body {
   text-align: center;
   margin-top: var(--space-4);
   font-size: var(--text-xs);
-  color: rgba(255,255,255,0.55);
+  color: var(--text-muted);
 }
 .footer a {
-  color: rgba(255,255,255,0.75);
+  color: var(--text-soft);
   text-decoration: none;
-  border-bottom: 1px solid rgba(255,255,255,0.25);
+  border-bottom: 1px solid rgba(var(--white-rgb),0.25);
   transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
 }
 .footer a:hover { color: var(--accent-mint); border-color: var(--accent-mint); }

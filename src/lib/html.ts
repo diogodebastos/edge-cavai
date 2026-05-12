@@ -8,6 +8,9 @@ type LayoutOptions = {
 
 const GA_ID = "G-L58TRTVXWP";
 
+/** Must match --brand-purple in shared.css (inline fallback shown before CSS loads) */
+const BRAND_PURPLE = "#4a1fb8";
+
 export type NavPage = "chat" | "cv" | "blog" | "vibe";
 
 export function siteNav(current: NavPage, wrapAttrs = ""): string {
@@ -43,7 +46,7 @@ export function layout(body: string, opts: LayoutOptions = {}): string {
   const htmlClass = opts.bodyClass ? ` ${opts.bodyClass}` : "";
 
   return `<!DOCTYPE html>
-<html lang="en" style="background:#4a1fb8" class="${htmlClass.trim()}">
+<html lang="en" style="background:${BRAND_PURPLE}" class="${htmlClass.trim()}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
