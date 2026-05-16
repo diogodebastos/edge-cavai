@@ -5,11 +5,16 @@ Lisbon, Portugal | [LinkedIn](https://www.linkedin.com/in/diogodebastos) | [GitH
 👉 [try talking with my CV](https://edge-cavai.diogobastos.workers.dev/)
 
 ## Summary 📜 
-Senior data scientist (5+ years) with a Ph.D. in Physics and a track record of deploying machine learning solutions that operate on large-scale, high-velocity data. I pair rigorous statistical modelling with production engineering, working closely with product, engineering, and risk stakeholders to deliver resilient analytics. Recent focus spans time-series forecasting, optimisation, and LLM-enabled automation, with experience maintaining distributed compute environments within global collaborations.
+Staff AI/ML Engineer (5+ years) with a Ph.D. in Physics and a track record of deploying machine learning solutions that operate on large-scale, high-velocity data. I pair rigorous statistical modelling with production engineering, working closely with product, engineering, and risk stakeholders to deliver resilient analytics. Recent focus spans LLM-enabled automation, agentic systems, and platform-level AI engineering, alongside time-series forecasting and optimisation, with experience maintaining distributed compute environments within global collaborations.
 
 ## Work experience 💻 
+### [EY-Parthenon](https://www.ey.com/en_gl/services/strategy/parthenon)
+Lisbon, 2026/05 - current | Staff AI/ML Engineer, AI Hub (Europe West) EY-Parthenon
+
+- Hands-on builder within EY-Parthenon's Europe West AI Hub. Designing and shipping agentic systems, LLM integrations, and data pipelines at the platform level, infrastructure that dozens of teams and applications depend on across the region.
+
 ### [EDP](http://www.edp.com)
-Lisbon, 2022/09 - current | Senior data scientist, AI/ML & quantitative analyst
+Lisbon, 2022/09 - 2026/05 | Senior data scientist, AI/ML & quantitative analyst
 
 - Reduced short-term price forecast error from 15% to 5% by combining LSTM, CNN, and Temporal Fusion Transformer models implemented in Python with PyTorch and SQL-backed data pipelines.
 - Designed portfolio optimisation and algorithmic trading frameworks that improved gross margin by 30%, integrating ML outputs into decision workflows for trading and risk teams.
@@ -71,8 +76,8 @@ Board based on TOFHIR1” (internal note)
 
 - Programming: Python, C++, R, MATLAB, Bash
 - Data Analysis & Visualisation: Pandas, NumPy, Matplotlib, Seaborn
-- Machine Learning: PyTorch, TensorFlow, scikit-learn, Keras, neural networks, LSTM, TFT, CNN, BDT, genetic programming
-- NLP & GenAI: Azure OpenAI, Llama2, LangChain, Retrieval Augmented Generation, speech-to-text, translation, text-to-speech
+- Machine Learning: PyTorch, TensorFlow, scikit-learn, Keras, neural networks, LSTM, TFT, CNN, BDT, genetic programming, MLOps, data pipelines
+- NLP & GenAI: Azure OpenAI, Llama2, LangChain, Retrieval Augmented Generation, agentic systems / AI agents, LLM integration, Claude Code, Cloudflare Workers AI, speech-to-text, translation, text-to-speech
 - Databases & Platforms: SQL, MySQL, Oracle, Azure, Databricks
 - Statistical & Optimisation Techniques: Quadratic programming, risk control, Bayesian analysis
 - Leadership & Communication: Portuguese and English fluency, mentorship, outreach, conference speaking
