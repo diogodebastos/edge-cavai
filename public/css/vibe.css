@@ -13,8 +13,8 @@
   font-size: var(--text-md);
   font-weight: 600;
   letter-spacing: -0.005em;
-  background: rgba(var(--mint-rgb), 0.85);
-  color: var(--chat-bg);
+  background: rgba(var(--white-rgb), 0.04);
+  color: var(--color-white);
   border-bottom: 1px solid var(--glass-stroke-soft);
 }
 .vibe-card h3 a {

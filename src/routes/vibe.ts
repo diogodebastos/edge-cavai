@@ -5,16 +5,17 @@ import { layout, siteNav } from "../lib/html";
 type VibeProject = {
   title: string;
   url: string;
+  blogSlug?: string;
   featured?: boolean;
   placeholder?: boolean;
 };
 
 const projects: VibeProject[] = [
-  { title: "Velvet Blum",           url: "https://velvet-blum.pages.dev/",                                       featured: true },
+  { title: "Velvet Blum",           url: "https://velvet-blum.pages.dev/",                                       blogSlug: "blogpost-6", featured: true },
   { title: "AI Bot Activity",       url: "https://cf-ai-bot-globe.pages.dev/" },
-  { title: "LLM Circuits",          url: "https://llm-circuits.diogobastos.workers.dev/" },
-  { title: "PKMN RomHack",          url: "https://pokemon-emerald-legacy-solo-leveling-colosseum.pages.dev/" },
-  { title: "Claude Takes Control",  url: "https://cf-cl-lin-2.diogobastos.workers.dev/" },
+  { title: "LLM Circuits",          url: "https://llm-circuits.diogobastos.workers.dev/",                        blogSlug: "blogpost-4" },
+  { title: "PKMN RomHack",          url: "https://pokemon-emerald-legacy-solo-leveling-colosseum.pages.dev/",     blogSlug: "blogpost-3" },
+  { title: "Claude Takes Control",  url: "https://cf-cl-lin-2.diogobastos.workers.dev/",                         blogSlug: "blogpost-2" },
   { title: "Super Position Terrain", url: "https://super-position-grid.diogobastos.workers.dev/" },
   { title: "EuroSweeper",           url: "https://eurosweeper.diogobastos.workers.dev/" },
   { title: "Glow Pong",             url: "https://glow-pong.diogobastos.workers.dev/" },
@@ -46,7 +47,9 @@ function renderCard(p: VibeProject, num: number): string {
         <iframe data-src="${p.url}" loading="lazy" title="${p.title}"></iframe>
       </div>
       <div class="card-footer">
-        <span class="card-footer-label">Live preview</span>
+        ${p.blogSlug
+          ? `<a href="/blog/${p.blogSlug}" class="card-footer-label" aria-label="Read the story behind ${p.title}">Read the story</a>`
+          : `<span class="card-footer-label">Live preview</span>`}
         <a href="${p.url}" target="_blank" rel="noopener" class="card-footer-arrow" aria-label="Visit ${p.title}">&#x203A;</a>
       </div>
     </div>`;

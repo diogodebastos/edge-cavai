@@ -83,7 +83,6 @@ body:has(.grid-page) {
   position: relative;
   background: var(--glass-tint);
   border: 1px solid var(--glass-stroke);
-  border-top: 3px solid var(--accent-mint);
   border-radius: var(--glass-radius);
   overflow: hidden;
   box-shadow: var(--glass-shadow);
@@ -111,8 +110,7 @@ body:has(.grid-page) {
 .card:hover {
   transform: translateY(-4px);
   background: var(--glass-tint-strong);
-  border-color: var(--glass-stroke);
-  border-top-color: var(--accent-mint);
+  border-color: var(--accent-border-hover);
   box-shadow: var(--glass-shadow-hover);
 }
 .card:hover::before { opacity: 1; }
@@ -143,6 +141,14 @@ body:has(.grid-page) {
   text-transform: uppercase;
   color: var(--accent-mint);
   opacity: 0.85;
+}
+a.card-footer-label {
+  text-decoration: none;
+  transition: opacity var(--dur-fast) var(--ease-out);
+}
+a.card-footer-label:hover {
+  opacity: 1;
+  text-decoration: underline;
 }
 .card-footer-arrow {
   display: inline-flex;
