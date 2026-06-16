@@ -5,11 +5,11 @@ Lisbon, Portugal | [LinkedIn](https://www.linkedin.com/in/diogodebastos) | [GitH
 👉 [try talking with my CV](https://edge-cavai.diogobastos.workers.dev/)
 
 ## Summary 📜 
-Staff AI/ML Engineer (5+ years) with a Ph.D. in Physics and a track record of deploying machine learning solutions that operate on large-scale, high-velocity data. I pair rigorous statistical modelling with production engineering, working closely with product, engineering, and risk stakeholders to deliver resilient analytics. Recent focus spans LLM-enabled automation, agentic systems, and platform-level AI engineering, alongside time-series forecasting and optimisation, with experience maintaining distributed compute environments within global collaborations.
+Lead AI/ML Engineer (5+ years) with a Ph.D. in Physics and a track record of deploying machine learning solutions that operate on large-scale, high-velocity data. I pair rigorous statistical modelling with production engineering, working closely with product, engineering, and risk stakeholders to deliver resilient analytics. Recent focus spans LLM-enabled automation, agentic systems, and platform-level AI engineering, alongside time-series forecasting and optimisation, with experience maintaining distributed compute environments within global collaborations.
 
 ## Work experience 💻 
 ### [EY-Parthenon](https://www.ey.com/en_gl/services/strategy/parthenon)
-Lisbon, 2026/05 - current | Staff AI/ML Engineer, AI Hub (Europe West) EY-Parthenon
+Lisbon, 2026/05 - current | Lead AI/ML Engineer, AI Hub (Europe West) EY-Parthenon
 
 - Hands-on builder within EY-Parthenon's Europe West AI Hub. Designing and shipping agentic systems, LLM integrations, and data pipelines at the platform level, infrastructure that dozens of teams and applications depend on across the region.
 
