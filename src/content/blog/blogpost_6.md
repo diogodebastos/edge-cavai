@@ -10,6 +10,8 @@ Velvet Blum is the opposite of that. **You curate your network. Your network is 
 
 Live: [velvet-blum.pages.dev](https://velvet-blum.pages.dev/).
 
+![landing](/images/blog/bp6/landing.jpg)
+
 ![feed](/images/blog/bp6/feed.jpg)
 
 ## The lens
@@ -54,6 +56,8 @@ The whole auth surface is small enough to read in one sitting: [`apps/api/src/ro
 **Message contents.** The DM keys live on your device, not on the server. The X25519 keypair is generated client-side; the private key is wrapped with an Argon2id-derived key (`OPSLIMIT_MODERATE` / `MEMLIMIT_MODERATE`, random per-user salt) using libsodium `secretbox`, and only the *wrapped* blob is uploaded. Once unwrapped with your passphrase, the raw private key is cached in the browser's IndexedDB on that device. The server stores public keys, wrapped private keys, and sealed ciphertexts — nothing it can decrypt. A session hijacker on a fresh device sees encrypted blobs until they also know your passphrase.
 
 **What this doesn't give you.** Sealed-box DMs use static keys, so there's no forward secrecy: if a device is fully compromised, past ciphertexts on that device become readable. There's no 2FA or active-session list yet, no "log out everywhere" button, and no re-auth prompt for sensitive actions. The crypto is standard libsodium primitives in roughly 150 lines (`apps/web/src/lib/crypto.ts`) — easy to audit, but not formally audited. Forward secrecy via ephemeral session keys, device management, and a passphrase-strength meter are the obvious next steps.
+
+![mobile](/images/blog/bp6/mobile.jpg)
 
 ## Stack
 
