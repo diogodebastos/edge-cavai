@@ -12,6 +12,7 @@ type VibeProject = {
 
 const projects: VibeProject[] = [
   { title: "Velvet Blum",           url: "https://velvet-blum.pages.dev/",                                       blogSlug: "blogpost-6", featured: true },
+  { title: "Foundational Papers",   url: "https://foundational-papers.diogobastos.workers.dev/" },
   { title: "AI Bot Activity",       url: "https://cf-ai-bot-globe.pages.dev/" },
   { title: "LLM Circuits",          url: "https://llm-circuits.diogobastos.workers.dev/",                        blogSlug: "blogpost-4" },
   { title: "PKMN RomHack",          url: "https://pokemon-emerald-legacy-solo-leveling-colosseum.pages.dev/",     blogSlug: "blogpost-3" },
