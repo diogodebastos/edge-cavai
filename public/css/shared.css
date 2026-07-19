@@ -295,9 +295,13 @@ body::after {
   align-items: center;
   gap: var(--space-3);
   padding: var(--space-3) var(--space-5);
-  background: var(--glass-tint);
-  backdrop-filter: blur(var(--glass-blur));
-  -webkit-backdrop-filter: blur(var(--glass-blur));
+  /* Dark brand scrim so the near-white pills stay legible even when a light
+     surface (e.g. a project preview) scrolls behind the sticky header. */
+  background:
+    linear-gradient(rgba(var(--shadow-rgb), 0.42), rgba(var(--shadow-rgb), 0.42)),
+    var(--glass-tint);
+  backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(140%);
   border: 1px solid var(--glass-stroke);
   border-radius: var(--glass-radius);
   box-shadow: var(--glass-shadow);
