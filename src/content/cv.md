@@ -11,7 +11,12 @@ Lead AI/ML Engineer (5+ years) with a Ph.D. in Physics and a track record of dep
 ### [EY-Parthenon](https://www.ey.com/en_gl/services/strategy/parthenon)
 Lisbon, 2026/05 - current | Lead AI/ML Engineer, AI Hub (Europe West) EY-Parthenon
 
-- Hands-on builder within EY-Parthenon's Europe West AI Hub. Designing and shipping agentic systems, LLM integrations, and data pipelines at the platform level, infrastructure that dozens of teams and applications depend on across the region.
+- Hands-on builder within EY-Parthenon's Europe West AI Hub, shipping agentic systems, LLM integrations, and data pipelines at the platform level, infrastructure that dozens of teams and applications depend on across the region.
+- Built and rolled out the firm's Model Context Protocol (MCP) server, taking it from prototype to a supported internal service and growing adoption from 0 to 100+ users across consulting teams.
+- Designed and deployed production agents that automate research, document analysis, and client deliverables, including tool use, retrieval, evaluation harnesses, and guardrails for reliability and cost control.
+- Applied causal inference (difference-in-differences, synthetic control, uplift modelling) to quantify treatment effects where experimentation is impossible, giving clients defensible estimates of what actually drove an outcome.
+- Built Bayesian models for parameter estimation and forecasting under sparse data, propagating full posterior uncertainty into decisions so recommendations come with credible intervals rather than point estimates.
+- Lead AI-first teams of 3-5 engineers, owning technical direction, hiring and onboarding, code and model review, and the delivery cadence from scoping to production handover.
 
 ### [EDP](http://www.edp.com)
 Lisbon, 2022/09 - 2026/05 | Senior data scientist, AI/ML & quantitative analyst
