@@ -2,6 +2,7 @@ import type { Context } from "hono";
 import type { Env } from "../types";
 import cvHtml from "../content/cv-html";
 import { layout, detailPageShell } from "../lib/html";
+import { CV_PDF_PATH, CV_PDF_FILENAME } from "../lib/cv-pdf";
 
 export function cvHandler(c: Context<Env>) {
 
@@ -10,44 +11,24 @@ export function cvHandler(c: Context<Env>) {
     tocId: "cv-toc",
     contentId: "cv-content",
     contentHtml: cvHtml,
-    sidebarActions: `<button class="detail-action-btn" id="download-pdf">Save as PDF</button>`,
+    // Static asset built by src/lib/generate-cv-pdf.mjs on predeploy. The
+    // download attribute pins the saved filename, which the print dialog
+    // could never guarantee.
+    sidebarActions: `<a class="detail-action-btn" href="${CV_PDF_PATH}" download="${CV_PDF_FILENAME}">Download CV</a>`,
   });
 
   return c.html(
     layout(body, {
       title: "db-cv",
       css: ["/css/shared.css", "/css/detail-layout.css", "/css/cv.css"],
-      js: ["/js/toc.js", "/js/theme.js"],
+      js: ["/js/cv-sections.js", "/js/toc.js", "/js/theme.js"],
       inlineScript: `
-        // PDF export via the browser's own print engine: real text, real links,
-        // and native pagination (see the @media print block in cv.css).
-        document.getElementById('download-pdf').addEventListener('click', function() {
-          window.print();
-        });
+        // Group each role into a .cv-subsection block. Shared with the PDF
+        // pre-render so the page and the PDF stay structurally identical.
+        if (typeof wrapCvSubsections === 'function') wrapCvSubsections('cv-content');
 
-        // Chrome/Safari seed the "Save as PDF" filename from document.title.
-        var pageTitle = document.title;
-        window.addEventListener('beforeprint', function() { document.title = 'Diogo de Bastos CV'; });
-        window.addEventListener('afterprint', function() { document.title = pageTitle; });
-
-        // Wrap sections so each role stays a visually grouped block
-        var cvContent = document.getElementById('cv-content');
-        if (cvContent) {
-          var headings = Array.from(cvContent.querySelectorAll('h3'));
-          headings.forEach(function(heading) {
-            if (heading.closest('.cv-subsection')) return;
-            var wrapper = document.createElement('div');
-            wrapper.classList.add('cv-subsection');
-            heading.parentNode.insertBefore(wrapper, heading);
-            wrapper.appendChild(heading);
-            var next = wrapper.nextElementSibling;
-            while (next && next.tagName !== 'H2' && next.tagName !== 'H3') {
-              var toMove = next;
-              next = toMove.nextElementSibling;
-              wrapper.appendChild(toMove);
-            }
-          });
-        }
+        // Ctrl/Cmd-P still works and is styled by the @media print block in
+        // cv.css, but the button hands over the prebuilt file instead.
 
         // Init TOC and theme for cv-content
         if (typeof buildToc === 'function') buildToc('cv-content', 'cv-toc');
