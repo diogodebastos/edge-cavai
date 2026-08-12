@@ -9,7 +9,7 @@ type LayoutOptions = {
 type DetailPageOptions = {
   /** Which nav pill to highlight */
   navPage: NavPage;
-  /** Extra attributes on the siteNav wrapper (e.g. data-html2canvas-ignore) */
+  /** Extra attributes on the siteNav wrapper */
   navAttrs?: string;
   /** HTML for the sidebar actions slot (e.g. back button, download button) */
   sidebarActions: string;

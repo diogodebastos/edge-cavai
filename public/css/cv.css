@@ -27,8 +27,6 @@
 #cv-content h3 {
   letter-spacing: -0.01em;
   line-height: 1.25;
-  break-after: avoid-page;
-  page-break-after: avoid;
   scroll-margin-top: var(--nav-h, 5rem);
 }
 #cv-content h1 { font-size: var(--text-3xl); margin: 0 0 var(--space-3); }
@@ -41,11 +39,6 @@
 #cv-content h3 { font-size: var(--text-md); margin: var(--space-4) 0 var(--space-2); }
 #cv-content h1:first-child,
 #cv-content h2:first-child { margin-top: var(--space-1); }
-#cv-content p, #cv-content ul, #cv-content ol,
-#cv-content li, #cv-content blockquote {
-  break-inside: avoid;
-  page-break-inside: avoid;
-}
 #cv-content p { margin: 0 0 var(--space-3); }
 #cv-content ul, #cv-content ol { padding-left: 1.3rem; margin: 0 0 var(--space-3); }
 #cv-content li + li { margin-top: var(--space-2); }
@@ -55,42 +48,119 @@
   margin-bottom: var(--space-5);
   padding-bottom: var(--space-4);
   border-bottom: 1px dashed var(--glass-stroke-soft);
-  break-inside: avoid;
-  page-break-inside: avoid;
 }
 .cv-subsection:last-child { border-bottom: none; padding-bottom: 0; }
 
-/* ── PDF export: force black-on-white for html2canvas ── */
-#cv-content.pdf-export {
-  background: #fff;
-  color: #000;
-  border: none;
-  box-shadow: none;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
+/* ══════════════════════════════════════════
+   Print / "Save as PDF"
+   The page is paginated by the browser itself, so the rules below are
+   hints about what must NOT be split — never about what must be kept
+   whole. Marking whole roles as unbreakable is what produced the big
+   blank gaps: an entry too tall for the remaining space gets pushed to
+   the next page in full, and the leftover space stays empty.
+   ══════════════════════════════════════════ */
+@page {
+  size: A4;
+  margin: 14mm 15mm;
 }
-#cv-content.pdf-export a { color: var(--brand-purple); background-image: none; }
-#cv-content.pdf-export strong { color: #000; }
-#cv-content.pdf-export h2 { border-bottom-color: #ccc; }
-#cv-content.pdf-export .cv-subsection { border-bottom-color: #ddd; }
 
-/* ── Print: restore plain ── */
 @media print {
-  body, .dark-theme { background: var(--print-bg); color: var(--print-text); }
+  /* ── Flatten the app chrome to plain black on white ── */
+  html,
+  html.dark-theme,
+  body,
+  body:has(.detail-layout),
+  .dark-theme body:has(.detail-layout) {
+    background: var(--print-bg) !important;
+    color: var(--print-text) !important;
+  }
   body::before, body::after { display: none !important; }
-  .detail-layout { display: block; max-width: 8.27in; margin: 0 auto; padding: 0; }
-  .detail-sidebar, .detail-toc, #scroll-progress-container { display: none !important; }
-  #cv-content {
-    background: var(--print-bg);
-    color: var(--print-text);
+  .site-header-wrap,
+  .detail-sidebar,
+  .detail-toc,
+  #scroll-progress-container { display: none !important; }
+
+  .detail-layout {
+    display: block;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+  #cv-content,
+  .dark-theme #cv-content {
+    background: none !important;
+    color: var(--print-text) !important;
     border: none;
     box-shadow: none;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
     padding: 0;
+    margin: 0;
     max-width: none;
+    /* Denser than screen so sections fill the page instead of stranding
+       half-empty columns of whitespace. */
+    font-size: 10pt;
+    line-height: 1.42;
   }
-  #cv-content a { color: var(--print-text); background-image: none; }
-  #cv-content h2 { border-bottom-color: var(--print-border); }
-  .cv-subsection { border-bottom-color: var(--print-border-soft); }
+  #cv-content strong { color: var(--print-text); }
+  /* Links stay clickable in the PDF, so they need to *look* clickable.
+     Colour alone isn't enough (CVs get printed and forwarded in grayscale),
+     hence the underline as the primary signal. */
+  #cv-content a {
+    color: var(--print-link);
+    background-image: none;
+    text-decoration: underline;
+    text-decoration-thickness: 0.5pt;
+    text-underline-offset: 2px;
+  }
+  /* Company/section headings are already heavy; a full-weight rule under them
+     reads as clutter, so lighten the underline rather than drop it. */
+  #cv-content h1 a,
+  #cv-content h2 a,
+  #cv-content h3 a {
+    text-decoration-thickness: 0.4pt;
+    text-underline-offset: 3px;
+  }
+
+  /* ── Print type scale ── */
+  #cv-content h1 { font-size: 20pt; margin: 0 0 4pt; }
+  #cv-content h2 {
+    font-size: 13pt;
+    margin: 14pt 0 6pt;
+    padding-bottom: 3pt;
+    border-bottom: 1px solid var(--print-border);
+  }
+  #cv-content h2:first-child { margin-top: 0; }
+  #cv-content h3 { font-size: 11pt; margin: 0 0 2pt; }
+  #cv-content p { margin: 0 0 5pt; }
+  #cv-content ul, #cv-content ol { margin: 0 0 5pt; padding-left: 1.1em; }
+  #cv-content li + li { margin-top: 2pt; }
+
+  .cv-subsection {
+    margin-bottom: 9pt;
+    padding-bottom: 7pt;
+    border-bottom: 1px solid var(--print-border-soft);
+  }
+
+  /* ── Pagination ──
+     A role may break across pages; what must not break is a heading
+     stranded at the foot of a page, or a single bullet cut in half. */
+  #cv-content h1,
+  #cv-content h2,
+  #cv-content h3 {
+    break-after: avoid-page;
+    page-break-after: avoid;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  /* Company heading, its date/role line, and the first bullet travel together. */
+  .cv-subsection > h3 + p { break-after: avoid-page; page-break-after: avoid; }
+  #cv-content li {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  #cv-content p, #cv-content blockquote {
+    orphans: 2;
+    widows: 2;
+  }
 }

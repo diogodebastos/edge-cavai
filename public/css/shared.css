@@ -72,6 +72,8 @@
   --print-text: #000;
   --print-border: #ccc;
   --print-border-soft: #ddd;
+  /* Dark enough to stay legible ink when printed in grayscale. */
+  --print-link: #2a1a6b;
 
   /* ── Type scale (modular ~1.2) ── */
   --text-xs:   0.78rem;

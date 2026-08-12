@@ -7,44 +7,30 @@ export function cvHandler(c: Context<Env>) {
 
   const body = detailPageShell({
     navPage: "cv",
-    navAttrs: 'data-html2canvas-ignore="true"',
     tocId: "cv-toc",
     contentId: "cv-content",
     contentHtml: cvHtml,
-    sidebarActions: `<button class="detail-action-btn" id="download-pdf">Download CV</button>`,
-    sidebarAttrs: 'data-html2canvas-ignore="true"',
+    sidebarActions: `<button class="detail-action-btn" id="download-pdf">Save as PDF</button>`,
   });
 
   return c.html(
     layout(body, {
       title: "db-cv",
       css: ["/css/shared.css", "/css/detail-layout.css", "/css/cv.css"],
-      js: [
-        "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js",
-        "/js/toc.js",
-        "/js/theme.js",
-      ],
+      js: ["/js/toc.js", "/js/theme.js"],
       inlineScript: `
-        // PDF download
+        // PDF export via the browser's own print engine: real text, real links,
+        // and native pagination (see the @media print block in cv.css).
         document.getElementById('download-pdf').addEventListener('click', function() {
-          var el = document.getElementById('cv-content');
-          el.classList.add('pdf-export');
-          html2pdf().set({
-            margin: 0.5,
-            filename: 'diogo_de_bastos_cv.pdf',
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2, backgroundColor: '#fff' },
-            jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' },
-            pagebreak: {
-              mode: ['css', 'legacy'],
-              avoid: '#cv-content h1, #cv-content h2, #cv-content h3, #cv-content h4, #cv-content h5, #cv-content h6, #cv-content p, #cv-content ul, #cv-content ol, #cv-content li, #cv-content blockquote, .cv-subsection'
-            }
-          }).from(el).save().then(function() {
-            el.classList.remove('pdf-export');
-          });
+          window.print();
         });
 
-        // Wrap sections for PDF grouping
+        // Chrome/Safari seed the "Save as PDF" filename from document.title.
+        var pageTitle = document.title;
+        window.addEventListener('beforeprint', function() { document.title = 'Diogo de Bastos CV'; });
+        window.addEventListener('afterprint', function() { document.title = pageTitle; });
+
+        // Wrap sections so each role stays a visually grouped block
         var cvContent = document.getElementById('cv-content');
         if (cvContent) {
           var headings = Array.from(cvContent.querySelectorAll('h3'));
