@@ -10,9 +10,10 @@ type VibeProject = {
   placeholder?: boolean;
 };
 
+/* FisicAI always leads as the featured tile; newer projects go right after it. */
 const projects: VibeProject[] = [
-  { title: "Edge Guard",            url: "https://edge-guard.diogodebastos.com/",                                featured: true },
-  { title: "FisicAI",               url: "https://fisicai.diogobastos.workers.dev/" },
+  { title: "FisicAI",               url: "https://fisicai.diogobastos.workers.dev/",                              featured: true },
+  { title: "Edge Guard",            url: "https://edge-guard.diogodebastos.com/",                                blogSlug: "blogpost-7" },
   { title: "Foundational Papers",   url: "https://foundational-papers.diogobastos.workers.dev/" },
   { title: "Velvet Blum",           url: "https://velvet-blum.pages.dev/",                                       blogSlug: "blogpost-6" },
   { title: "AI Bot Activity",       url: "https://cf-ai-bot-globe.pages.dev/" },
