@@ -71,7 +71,7 @@ AI-native builds, shipped with Claude Code on Cloudflare's developer platform.
 - [Velvet Blum](https://velvet-blum.pages.dev/): a social network with no algorithm and no ads. Workers API on D1, KV, and R2; Durable Objects (SQLite) with WebSocket fan-out; cron triggers; end-to-end encrypted DMs (X25519, Argon2id, libsodium).
 - [LLM Circuits](https://llm-circuits.diogobastos.workers.dev/): Workers AI playground that wires LLMs like circuit components, with AI Gateway caching, rate limiting, and per-call cost telemetry.
 - [FisicAI](https://fisicai.diogobastos.workers.dev/): open-source agentic harness for high energy physics that searches INSPIRE-HEP and arXiv, downloads published HEPData likelihoods, and reruns pyhf inference to reproduce LHC results.
-- [This site](https://edge-cavai.diogobastos.workers.dev/): CV chatbot and blog on Cloudflare Workers (Hono, TypeScript), deployed by GitHub Actions with a pre-rendered PDF CV.
+- [edge-cavai](https://edge-cavai.diogobastos.workers.dev/): personal site with a CV chatbot and blog on Cloudflare Workers (Hono, TypeScript), deployed by GitHub Actions with a pre-rendered PDF CV.
 
 ## Education 🎓 
 
