@@ -2,10 +2,19 @@ name = "edge-cavai"
 main = "src/index.ts"
 compatibility_date = "2026-04-01"
 compatibility_flags = ["nodejs_compat"]
+workers_dev = true
+
+routes = [
+  { pattern = "diogodebastos.com", custom_domain = true },
+  { pattern = "www.diogodebastos.com", custom_domain = true },
+]
 
 [assets]
 directory = "./public"
 binding = "ASSETS"
+# "/" is served straight from public/index.html; run the Worker first there
+# too, so the host redirects in src/index.ts also cover the home page.
+run_worker_first = ["/", "/index.html"]
 
 [[rules]]
 type = "Text"

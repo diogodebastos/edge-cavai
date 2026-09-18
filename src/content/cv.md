@@ -1,8 +1,8 @@
 # Diogo de Bastos 👋
 
-Lisbon, Portugal | [diogodebastos18@gmail.com](mailto:diogodebastos18@gmail.com) | [linkedin.com/in/diogodebastos](https://www.linkedin.com/in/diogodebastos) | [github.com/diogodebastos](https://github.com/diogodebastos) | [Google Scholar](https://scholar.google.com/citations?user=6f2lV5YAAAAJ&hl=en)
+Lisbon, Portugal | [diogodebastos.com](https://diogodebastos.com) | [diogodebastos18@gmail.com](mailto:diogodebastos18@gmail.com) | [linkedin.com/in/diogodebastos](https://www.linkedin.com/in/diogodebastos) | [github.com/diogodebastos](https://github.com/diogodebastos) | [Google Scholar](https://scholar.google.com/citations?user=6f2lV5YAAAAJ&hl=en)
 
-👉 [try talking with my CV](https://edge-cavai.diogobastos.workers.dev/)
+👉 [try talking with my CV](https://diogodebastos.com/)
 
 ## Summary 📜 
 Lead AI/ML Engineer and Manager in EY-Parthenon's AI Hub, with a Ph.D. in Physics from the CMS experiment at CERN and hands-on machine learning since 2018 across research and industry. I build and run the firm's Model Context Protocol (MCP) server and production AI agents, and I work directly with clients, from pitch demos and scoping to onsite delivery. Before EY-Parthenon, I spent nearly four years at EDP shipping forecasting and trading-optimisation models into production and building LLM assistants for trading and risk teams. I pair rigorous statistics (causal inference, Bayesian modelling) with production engineering, and I build on Cloudflare's developer platform (Workers, Workers AI, Durable Objects, D1) in my own time.
@@ -71,7 +71,7 @@ AI-native builds, shipped with Claude Code on Cloudflare's developer platform.
 - [Velvet Blum](https://velvet-blum.pages.dev/): a social network with no algorithm and no ads. Workers API on D1, KV, and R2; Durable Objects (SQLite) with WebSocket fan-out; cron triggers; end-to-end encrypted DMs (X25519, Argon2id, libsodium).
 - [LLM Circuits](https://llm-circuits.diogobastos.workers.dev/): Workers AI playground that wires LLMs like circuit components, with AI Gateway caching, rate limiting, and per-call cost telemetry.
 - [FisicAI](https://fisicai.diogobastos.workers.dev/): open-source agentic harness for high energy physics that searches INSPIRE-HEP and arXiv, downloads published HEPData likelihoods, and reruns pyhf inference to reproduce LHC results.
-- [edge-cavai](https://edge-cavai.diogobastos.workers.dev/): personal site with a CV chatbot and blog on Cloudflare Workers (Hono, TypeScript), deployed by GitHub Actions with a pre-rendered PDF CV.
+- [edge-cavai](https://diogodebastos.com/): personal site with a CV chatbot and blog on Cloudflare Workers (Hono, TypeScript), deployed by GitHub Actions with a pre-rendered PDF CV.
 
 ## Education 🎓 
 
