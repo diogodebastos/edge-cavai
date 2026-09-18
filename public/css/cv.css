@@ -75,6 +75,9 @@
     color: var(--print-text) !important;
   }
   body::before, body::after { display: none !important; }
+  /* 100vh is the whole sheet in print, so a document shorter than a page
+     (a cover letter) would overflow onto a blank second page. */
+  html, body { min-height: 0 !important; }
   .site-header-wrap,
   .detail-sidebar,
   .detail-toc,
