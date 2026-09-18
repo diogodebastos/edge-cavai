@@ -10,7 +10,10 @@ const app = new Hono<Env>();
 /* diogodebastos.com is the canonical host; aliases get a permanent redirect.
    Only GET/HEAD move: a chat page still open on an old host keeps POSTing. */
 const CANONICAL_HOST = "diogodebastos.com";
-const REDIRECT_HOSTS = new Set([`www.${CANONICAL_HOST}`]);
+const REDIRECT_HOSTS = new Set([
+  `www.${CANONICAL_HOST}`,
+  "edge-cavai.diogobastos.workers.dev", // the site's original address
+]);
 
 app.use("*", async (c, next) => {
   const url = new URL(c.req.url);
