@@ -11,7 +11,8 @@ type VibeProject = {
 };
 
 const projects: VibeProject[] = [
-  { title: "FisicAI",               url: "https://fisicai.diogobastos.workers.dev/",                              featured: true },
+  { title: "Edge Guard",            url: "https://edge-guard.diogodebastos.com/",                                featured: true },
+  { title: "FisicAI",               url: "https://fisicai.diogobastos.workers.dev/" },
   { title: "Foundational Papers",   url: "https://foundational-papers.diogobastos.workers.dev/" },
   { title: "Velvet Blum",           url: "https://velvet-blum.pages.dev/",                                       blogSlug: "blogpost-6" },
   { title: "AI Bot Activity",       url: "https://cf-ai-bot-globe.pages.dev/" },

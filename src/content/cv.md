@@ -66,6 +66,7 @@ Lisbon, 2018/01 - 2023/07 | Ph.D. Researcher, CMS Experiment (LIP Lisbon)
 
 AI-native builds, shipped with Claude Code on Cloudflare's developer platform.
 
+- [Edge Guard](https://edge-guard.diogodebastos.com/): the diogodebastos.com zone and an app Worker managed with Terraform (PoC): WAF custom rules, rate limiting, Bot Fight Mode, cache rules, zone TLS settings and Turnstile, with a Workers AI assistant that explains rules and drafts new ones as Terraform.
 - [binding-doctor](https://github.com/diogodebastos/binding-doctor): open-source CLI and MCP server that reconciles Cloudflare bindings across code, Wrangler config, and the live account (D1, KV, R2, Queues, Vectorize), with an idempotent diff / plan / apply loop over the Cloudflare API.
 - [AI Bot Activity](https://cf-ai-bot-globe.pages.dev/): 3D globe of AI-crawler traffic by country from the Cloudflare Radar API, with a Pages Functions proxy that keeps the API token server-side and caches responses.
 - [Velvet Blum](https://velvet-blum.pages.dev/): a social network with no algorithm and no ads. Workers API on D1, KV, and R2; Durable Objects (SQLite) with WebSocket fan-out; cron triggers; end-to-end encrypted DMs (X25519, Argon2id, libsodium).
@@ -86,7 +87,7 @@ AI-native builds, shipped with Claude Code on Cloudflare's developer platform.
 
 ## Skills 💫 
 
-- Cloudflare developer platform: Workers, Workers AI, AI Gateway, Pages and Pages Functions, D1, KV, R2, Durable Objects, Queues, Cron Triggers, Radar API, Wrangler
+- Cloudflare developer platform: Workers, Workers AI, AI Gateway, Pages and Pages Functions, D1, KV, R2, Durable Objects, Queues, Cron Triggers, Radar API, Wrangler, Terraform (Cloudflare provider, PoC)
 - AI & LLMs: agentic systems, Model Context Protocol (MCP, FastMCP), Retrieval Augmented Generation, evaluation harnesses and guardrails, LangChain, Azure OpenAI, Llama 2, Weaviate, Claude Code, Codex, Cursor, speech-to-text, translation, text-to-speech
 - Machine learning & statistics: PyTorch, TensorFlow, Keras, scikit-learn, time-series forecasting (LSTM, CNN, Temporal Fusion Transformer), boosted decision trees, genetic programming, causal inference, Bayesian analysis, quadratic programming, risk control
 - Data & platforms: Databricks (Apps, Unity Catalog, Vector Search, MLflow), Azure, SQL, MySQL, Oracle, Pandas, NumPy, Matplotlib, Seaborn, data pipelines, MLOps
