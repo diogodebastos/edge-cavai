@@ -3,3 +3,8 @@ dist/
 .wrangler/
 .dev.vars
 .DS_Store
+
+# Cloudflare job hunt: private workspace, tracker and skills
+cloudflare/
+.claude/skills/apply-cf/
+.claude/skills/update-linkedin/
