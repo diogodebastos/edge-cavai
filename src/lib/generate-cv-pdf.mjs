@@ -8,19 +8,33 @@
  *
  * Pagination comes from the very same @media print block in public/css/cv.css
  * that Ctrl-P uses, so the two stay in agreement.
+ *
+ * With no flags it builds the public CV. --in/--out/--title render any other
+ * markdown (a tailored CV, a cover letter) through the same pipeline:
+ *   node src/lib/generate-cv-pdf.mjs --in letter.md --out letter.pdf --title "…"
  */
 import fs from "fs";
 import path from "path";
 import http from "http";
 import { spawn } from "child_process";
 import os from "os";
+import { parseArgs } from "util";
 import { marked } from "marked";
+
+const { values: args } = parseArgs({
+  options: {
+    in: { type: "string" },
+    out: { type: "string" },
+    title: { type: "string" },
+  },
+});
 
 const ROOT = process.cwd();
 const PUBLIC_DIR = path.join(ROOT, "public");
-const CV_MD = path.join(ROOT, "src", "content", "cv.md");
+const CV_MD = args.in ? path.resolve(args.in) : path.join(ROOT, "src", "content", "cv.md");
 /* Keep in sync with src/lib/cv-pdf.ts */
-const OUT_FILE = path.join(PUBLIC_DIR, "diogo-de-bastos-cv.pdf");
+const OUT_FILE = args.out ? path.resolve(args.out) : path.join(PUBLIC_DIR, "diogo-de-bastos-cv.pdf");
+const TITLE = args.title ?? "Diogo de Bastos - CV";
 
 const CHROME_CANDIDATES = [
   process.env.CHROME_PATH,
@@ -46,7 +60,7 @@ function buildPage(cvHtml) {
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Diogo de Bastos - CV</title>
+<title>${TITLE}</title>
 <link rel="stylesheet" href="/fonts/signika.css">
 <link rel="stylesheet" href="/css/shared.css">
 <link rel="stylesheet" href="/css/detail-layout.css">
@@ -177,7 +191,14 @@ function pinCreationDate(file, date) {
   fs.writeFileSync(file, Buffer.from(patched, "latin1"));
 }
 
-const cvHtml = marked.parse(fs.readFileSync(CV_MD, "utf8"), { async: false });
+/* The web page keeps its emoji; the PDF is what résumé parsers read, and an
+   emoji inside "Summary 📜" can stop a heading being recognised as a section.
+   Drop each emoji together with the space in front of it. */
+function stripEmoji(md) {
+  return md.replace(/ ?(?:\p{Extended_Pictographic}\uFE0F?\u200D?)+/gu, "");
+}
+
+const cvHtml = marked.parse(stripEmoji(fs.readFileSync(CV_MD, "utf8")), { async: false });
 const { server, port } = await serve(buildPage(cvHtml));
 try {
   await runChrome(chrome, `http://127.0.0.1:${port}/cv`, OUT_FILE);
