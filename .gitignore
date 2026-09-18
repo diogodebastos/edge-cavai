@@ -8,3 +8,6 @@ dist/
 cloudflare/
 .claude/skills/apply-cf/
 .claude/skills/update-linkedin/
+
+# Cloudflare hunt tracker launcher skill
+.claude/skills/cf-hunt/
