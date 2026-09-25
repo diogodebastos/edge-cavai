@@ -16,9 +16,9 @@ export async function chatCompletion(
     },
     body: JSON.stringify({
       model: "gpt-5-mini",
-      reasoning_effort: "minimal",
+      reasoning_effort: "low",
       messages,
-      max_completion_tokens: 500,
+      max_completion_tokens: 800,
       n: 1,
     }),
   });
