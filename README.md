@@ -9,7 +9,7 @@ Ported from a Django/Vercel stack to a lightweight Hono + TypeScript worker with
 - **Runtime:** Cloudflare Workers
 - **Framework:** [Hono](https://hono.dev) (~14KB)
 - **Markdown:** [marked](https://marked.js.org) (~40KB)
-- **LLM:** OpenAI `gpt-4o-mini` via raw `fetch` (no SDK)
+- **LLM:** OpenAI `gpt-5-mini` (minimal reasoning) via raw `fetch` (no SDK)
 - **Static assets:** Cloudflare Workers Assets
 - **Language:** TypeScript (strict mode)
 

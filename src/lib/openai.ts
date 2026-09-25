@@ -15,9 +15,10 @@ export async function chatCompletion(
       Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
-      model: "gpt-4o-mini",
+      model: "gpt-5-mini",
+      reasoning_effort: "minimal",
       messages,
-      max_tokens: 250,
+      max_completion_tokens: 500,
       n: 1,
     }),
   });
