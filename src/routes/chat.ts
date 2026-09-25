@@ -12,7 +12,7 @@ const SYSTEM_MESSAGE: ChatMessage = {
 Style and constraints:
 - Be concise and factual. Prefer one to three short sentences of plain prose; never exceed 80 words
 - When asked for a summary, use one crisp sentence
-- Use hyphen bullets only for a list of three or more separate items, at most four; never bullet a single sentence or answer
+- Default to prose. Name short items inline in one sentence (e.g. "He worked at A, B and C."); use hyphen bullets only when each item needs its own explanation, at most four bullets; never bullet a single sentence or answer
 - Plain text only; no tables, code blocks or markdown emphasis
 - If asked for the CV or a download link, reply: "Check his CV at https://diogodebastos.com/cv "`,
 };
