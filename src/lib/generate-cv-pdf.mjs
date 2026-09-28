@@ -12,6 +12,11 @@
  * With no flags it builds the public CV. --in/--out/--title render any other
  * markdown (a tailored CV, a cover letter) through the same pipeline:
  *   node src/lib/generate-cv-pdf.mjs --in letter.md --out letter.pdf --title "…"
+ *
+ * --font "<css font stack>" forces one static font on every element. The site's
+ * system and variable fonts (SF, Signika) come out of Chrome as Type3 glyph
+ * drawings; a static font such as Arial embeds as ordinary TrueType, which
+ * gives résumé parsers a cleaner text layer.
  */
 import fs from "fs";
 import path from "path";
@@ -26,6 +31,7 @@ const { values: args } = parseArgs({
     in: { type: "string" },
     out: { type: "string" },
     title: { type: "string" },
+    font: { type: "string" },
   },
 });
 
@@ -65,6 +71,7 @@ function buildPage(cvHtml) {
 <link rel="stylesheet" href="/css/shared.css">
 <link rel="stylesheet" href="/css/detail-layout.css">
 <link rel="stylesheet" href="/css/cv.css">
+${args.font ? `<style>* { font-family: ${args.font} !important; }</style>` : ""}
 </head>
 <body>
 <div class="detail-layout">
@@ -198,7 +205,14 @@ function stripEmoji(md) {
   return md.replace(/ ?(?:\p{Extended_Pictographic}\uFE0F?\u200D?)+/gu, "");
 }
 
-const cvHtml = marked.parse(stripEmoji(fs.readFileSync(CV_MD, "utf8")), { async: false });
+/* Gmail flags a PDF as "Virus detected" when it links to Cloudflare's free
+   hosting domains (*.pages.dev, *.workers.dev), so the PDF keeps those
+   addresses as plain text. The web page keeps its links. */
+function unlinkFreeHosts(html) {
+  return html.replace(/<a [^>]*href="https?:\/\/[^"]*\.(?:pages|workers)\.dev[^"]*"[^>]*>([\s\S]*?)<\/a>/g, "$1");
+}
+
+const cvHtml = unlinkFreeHosts(marked.parse(stripEmoji(fs.readFileSync(CV_MD, "utf8")), { async: false }));
 const { server, port } = await serve(buildPage(cvHtml));
 try {
   await runChrome(chrome, `http://127.0.0.1:${port}/cv`, OUT_FILE);
