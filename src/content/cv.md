@@ -62,7 +62,7 @@ Lisbon, 2018/01 - 2023/07 | Ph.D. Researcher, CMS Experiment (LIP Lisbon)
 - Tested and calibrated ASICs for the CMS Timing Detector upgrade.
 - Mentored junior researchers and organised outreach events to promote STEM education.
 
-## Projects 🛠 
+## [Projects](https://diogodebastos.com/vibe-coding) 🛠 
 
 AI-native builds, shipped with Claude Code on Cloudflare's developer platform.
 
