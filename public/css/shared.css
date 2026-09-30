@@ -280,12 +280,6 @@ body::after {
   color: var(--chat-bg);
   border-color: rgba(var(--white-rgb),0.55);
 }
-.nav-pill-quiet {
-  opacity: 0.78;
-  font-weight: 400;
-}
-.nav-pill-quiet:hover { opacity: 1; }
-
 /* Push the theme toggle to the far right of the nav bar */
 .nav-pills .theme-toggle-button { margin-left: auto; }
 

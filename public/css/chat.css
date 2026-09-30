@@ -327,7 +327,6 @@ html, body {
 /* ── Mobile ── */
 @media (max-width: 640px) {
   .card-header { padding: var(--space-3); }
-  .nav-pill-quiet { margin-left: 0; }
   .hero-title { font-size: var(--text-2xl); }
   .btn-send-label { display: none; }
   .btn-send { padding: 0 var(--space-4); }
