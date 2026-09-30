@@ -18,7 +18,7 @@ Lisbon, 2026/05 - present | Manager, Lead AI/ML Engineer, AI Hub (Europe West)
 - Pre-sales: build pitch demos and proofs of concept, present them in client pitches, and equip other EY consultants to take AI offerings to their clients.
 - Designed and deployed production agents that automate research, document analysis, and client deliverables, including tool use, retrieval, evaluation harnesses, and guardrails for reliability and cost control.
 - Applied causal inference (difference-in-differences, synthetic control, uplift modelling) and Bayesian models for sparse-data estimation and forecasting, giving clients defensible effect estimates with credible intervals rather than point estimates.
-- Tech lead for AI-first teams of 3-5 engineers: technical direction, code and model review, interviewing, onboarding and mentoring, and delivery from scoping to production handover.
+- Line manager for an AI-first team of 3-5 engineers: formal performance reviews, regular 1:1s, technical direction, code and model review, interviewing, onboarding and mentoring, and delivery from scoping to production handover.
 
 ### [EDP](https://www.edp.com)
 Lisbon, 2025/09 - 2026/05 | Market Modeling Senior Specialist, Global Energy Management Trading Modelling
@@ -32,7 +32,7 @@ Lisbon, 2022/09 - 2025/08 | Senior Data Scientist & Quantitative Analyst
 - Migrated analytics from MATLAB and R to a Python ecosystem, formalising code efficiency, scalability, and reproducibility for globally distributed stakeholders.
 - Deployed predictive services and analytical applications on Databricks to meet availability, monitoring, and scalability requirements.
 - Built LLM-powered assistants using Azure OpenAI, Llama 2, Retrieval Augmented Generation, Weaviate, and LangChain to automate report generation and data interpretation, including PoCs for report automation and research summarisation. Cut manual review time by >40%.
-- Mentored colleagues on MLOps practices, supervised a master’s thesis on deep learning for price forecasting, and acted as product lead for ML, optimisation, and trading initiatives.
+- Wrote formal performance reviews for the colleagues I led, mentored colleagues on MLOps practices, supervised a master’s thesis on deep learning for price forecasting, and acted as product lead for ML, optimisation, and trading initiatives.
 
 ### Qold
 Coimbra, 2016/10 - 2017/06 | Co-founder, Hardware & Business Development
