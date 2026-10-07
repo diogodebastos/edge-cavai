@@ -13,6 +13,7 @@ type VibeProject = {
 /* FisicAI always leads as the featured tile; newer projects go right after it. */
 const projects: VibeProject[] = [
   { title: "FisicAI",               url: "https://fisicai.diogobastos.workers.dev/",                              featured: true },
+  { title: "Lax",                   url: "https://lax.diogodebastos.com/demo" },
   { title: "Edge Guard",            url: "https://edge-guard.diogodebastos.com/",                                blogSlug: "blogpost-7" },
   { title: "Foundational Papers",   url: "https://foundational-papers.diogobastos.workers.dev/" },
   { title: "Velvet Blum",           url: "https://velvet-blum.pages.dev/",                                       blogSlug: "blogpost-6" },
