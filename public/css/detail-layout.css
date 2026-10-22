@@ -134,6 +134,7 @@ body:has(.detail-layout) {
 .detail-main {
   max-width: 68ch;
   width: 100%;
+  min-width: 0; /* a flex item: without this, a long code line or table widens it past the page */
   margin: 0 auto;
   padding: var(--space-6) var(--space-6);
   line-height: 1.7;

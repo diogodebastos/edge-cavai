@@ -166,3 +166,7 @@
   #blog-content h1 { font-size: var(--text-2xl); }
   #blog-content h2 { font-size: var(--text-lg); }
 }
+
+/* Wide tables scroll inside the post instead of widening it */
+#blog-content table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; }
+#blog-content th, #blog-content td { padding: 0.35em 0.7em; border-bottom: 1px solid var(--glass-stroke); text-align: left; vertical-align: top; }
